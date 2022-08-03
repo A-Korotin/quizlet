@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -12,7 +13,8 @@ import java.util.List;
 public class Card {
     @NonNull
     @Id
-    private String id;
+    @GeneratedValue
+    private UUID id;
 
     @NonNull
     private String term;

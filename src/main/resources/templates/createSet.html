@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new set</title>
+</head>
+<body>
+    <form action="#" th:action="@{/create}" th:object="${set}" method="post">
+        <div><label>Set name: <input type="text" th:field="*{title}"></label></div>
+        <div><label>Set description (optional) <input type="text" th:field="*{description}"></label></div>
+        <div><label>Allow others to use this set? <input type="checkbox" th:field="*{isPublic}"></label></div>
+        <br>
+        <div>
+            <textarea th:field="*{cards.}">Term</textarea>
+
+            <textarea>Description</textarea>
+        </div>
+        <div>
+            <input type="submit" value="Create set">
+        </div>
+    </form>
+</body>
+</html>

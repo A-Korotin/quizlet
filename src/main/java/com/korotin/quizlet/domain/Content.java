@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -12,9 +13,11 @@ import javax.persistence.*;
 public class Content {
     @NonNull
     @Id
-    private String id;
+    @GeneratedValue
+    private UUID id;
 
     @NonNull
+    @Enumerated(EnumType.STRING)
     private ContentType type;
 
     @NonNull
