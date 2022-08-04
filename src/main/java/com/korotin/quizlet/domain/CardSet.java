@@ -21,7 +21,7 @@ public class CardSet {
 
     private String description = "";
 
-    private boolean isPublic;
+    private Boolean isPublic;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "set_id")

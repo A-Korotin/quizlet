@@ -20,11 +20,5 @@ public class Card {
     private String term;
 
     @NonNull
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id")
-    private List<Content> contents;
-
-    @ManyToOne
-    @JoinColumn(name = "set_id")
-    private CardSet set;
+    private String definition;
 }

@@ -10,14 +10,17 @@
         <div><label>Set description (optional) <input type="text" th:field="*{description}"></label></div>
         <div><label>Allow others to use this set? <input type="checkbox" th:field="*{isPublic}"></label></div>
         <br>
-        <div>
-            <textarea th:field="*{cards.}">Term</textarea>
+        <div class="card-form" th:each="i : ${#numbers.sequence(0, nCards - 1)}">
+            <div>
+                <textarea th:field="*{cards[__${i}__].term}">Term</textarea>
 
-            <textarea>Description</textarea>
+                <textarea th:field="*{cards[__${i}__].definition}">Definition</textarea>
+            </div>
         </div>
         <div>
             <input type="submit" value="Create set">
         </div>
+
     </form>
 </body>
 </html>
