@@ -11,20 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
 @Controller
 public class MainController {
 
-    private CardRepository cardRepository;
-
     private CardSetRepository cardSetRepository;
 
     @Autowired
-    public MainController(CardRepository cardRepository,
-                          CardSetRepository cardSetRepository) {
-        this.cardRepository = cardRepository;
+    public MainController(CardSetRepository cardSetRepository) {
         this.cardSetRepository = cardSetRepository;
     }
 
@@ -48,13 +45,45 @@ public class MainController {
 
     @PostMapping("/create")
     public String addSet(@ModelAttribute CardSet cardSet) {
+        cardSet.getCards().removeIf(c -> c.getTerm().isEmpty());
         System.out.println(cardSetRepository.save(cardSet));
         return "redirect:/";
     }
 
-    @GetMapping("/set/{id}")
+    @GetMapping("/sets/{id}")
     public String viewSet(@PathVariable UUID id) {
         System.out.println(cardSetRepository.findAllById(List.of(id)));
+        return "redirect:/";
+    }
+
+    @GetMapping("/sets/{id}/edit")
+    public String editSet(Model model,
+                          @PathVariable UUID id,
+                          @RequestParam(defaultValue = "3") int nCards) {
+
+
+        Optional<CardSet> cardSet = cardSetRepository.findById(id);
+
+        if (cardSet.isEmpty()) {
+            // todo not found page
+            return "redirect:/";
+        }
+
+        model.addAttribute("set", cardSet.get());
+        model.addAttribute("nCards", nCards);
+
+        return "editSet";
+    }
+
+    @PostMapping("/sets/{id}/edit")
+    public String confirmEdit(@PathVariable UUID id,
+                              @RequestParam(defaultValue = "3") int nCards,
+                              @ModelAttribute CardSet editedCardSet) {
+
+        // todo check owner/editor of chosen set
+        System.out.println(editedCardSet);
+        editedCardSet.getCards().removeIf(c -> c.getTerm() == null || c.getTerm().isEmpty());
+        System.out.println(cardSetRepository.save(editedCardSet));
         return "redirect:/";
     }
 }

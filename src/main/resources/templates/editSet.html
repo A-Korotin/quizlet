@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit card set</title>
+</head>
+<body>
+    <form action="#" th:action="@{/sets/{id}/edit(id = ${set.id})}" th:object="${set}" method="post">
+        <div><label>Set name: <input type="text" th:field="*{title}"></label></div>
+        <div><label>Set description (optional) <input type="text" th:field="*{description}"></label></div>
+        <div><label>Allow others to use this set? <input type="checkbox" th:field="*{isPublic}" th:checked="${isPublic}"></label></div>
+        <br>
+        <div class="card-form" th:each="card, iter : ${set.cards}" >
+            <div class="text-areas-container">
+                <textarea class="term-area"
+                          th:field="*{cards[__${iter.index}__].term}"
+                          th:text="#{term}">Term</textarea>
+
+                <textarea class="definition-area"
+                          th:field="*{cards[__${iter.index}__].definition}"
+                          th:text="#{definition}">Definition</textarea>
+            </div>
+        </div>
+
+        <div class="card-form" th:each="i : ${#numbers.sequence(#lists.size(set.cards), #lists.size(set.cards) + nCards - 1)}">
+            <div class="text-areas-container">
+                <textarea class="term-area"
+                          th:field="*{cards[__${i}__].term}">Term</textarea>
+
+                <textarea class="definition-area"
+                          th:field="*{cards[__${i}__].definition}">Definition</textarea>
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Edit set">
+        </div>
+
+    </form>
+</body>
+</html>
