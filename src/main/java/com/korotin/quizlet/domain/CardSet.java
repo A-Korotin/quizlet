@@ -33,4 +33,14 @@ public class CardSet {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<User> editors;
+
+    public void clearEmptyCards() {
+        cards.removeIf(c -> {
+            String term = c.getTerm();
+            String definition = c.getDefinition();
+            return  term == null   || definition == null ||
+                    term.isEmpty() || definition.isEmpty();
+        });
+
+    }
 }

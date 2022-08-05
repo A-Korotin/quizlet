@@ -1,9 +1,9 @@
 package com.korotin.quizlet.controller;
 
 import com.korotin.quizlet.domain.CardSet;
-import com.korotin.quizlet.domain.User;
-import com.korotin.quizlet.repository.CardRepository;
 import com.korotin.quizlet.repository.CardSetRepository;
+import com.korotin.quizlet.service.CardSetService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,14 +16,13 @@ import java.util.UUID;
 
 
 @Controller
+@AllArgsConstructor
 public class MainController {
 
-    private CardSetRepository cardSetRepository;
+    private final CardSetRepository cardSetRepository;
 
-    @Autowired
-    public MainController(CardSetRepository cardSetRepository) {
-        this.cardSetRepository = cardSetRepository;
-    }
+    private final CardSetService cardSetService;
+
 
     @GetMapping("/")
     public String home() {
@@ -82,8 +81,10 @@ public class MainController {
 
         // todo check owner/editor of chosen set
         System.out.println(editedCardSet);
-        editedCardSet.getCards().removeIf(c -> c.getTerm() == null || c.getTerm().isEmpty());
+        editedCardSet.clearEmptyCards();
         System.out.println(cardSetRepository.save(editedCardSet));
         return "redirect:/";
     }
+
+
 }

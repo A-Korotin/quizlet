@@ -1,16 +1,12 @@
 package com.korotin.quizlet.controller;
 
-import com.korotin.quizlet.domain.Role;
 import com.korotin.quizlet.domain.User;
-import com.korotin.quizlet.repository.UserRepository;
 import com.korotin.quizlet.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.Set;
 
 @Controller
 @AllArgsConstructor

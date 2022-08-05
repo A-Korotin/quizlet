@@ -8,17 +8,14 @@ import java.util.UUID;
 
 @Entity
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class Card {
-    @NonNull
     @Id
     @GeneratedValue
     private UUID id;
 
-    @NonNull
     private String term;
 
-    @NonNull
     private String definition;
 }
