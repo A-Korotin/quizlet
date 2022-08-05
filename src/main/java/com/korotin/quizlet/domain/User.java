@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
@@ -21,8 +23,11 @@ public class User implements UserDetails {
     @GeneratedValue
     private UUID id;
 
+    @Size(min = 4, max = 30,
+            message = "Username should be between 4 and 30 characters")
     private String username;
 
+    @Size(min = 6, message = "Password should contain at least 6 characters")
     private String password;
 
     @Transient

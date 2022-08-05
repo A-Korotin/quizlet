@@ -5,8 +5,11 @@ import com.korotin.quizlet.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
@@ -21,12 +24,19 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, Model model) {
+    public String addUser(@Valid User user,
+                          BindingResult result,
+                          Model model) {
+
+        if (result.hasErrors())
+            return "registration";
 
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
             model.addAttribute("message", "Passwords don't match!");
             return "registration";
         }
+
+
 
         boolean userAdded = userService.saveUser(user);
 

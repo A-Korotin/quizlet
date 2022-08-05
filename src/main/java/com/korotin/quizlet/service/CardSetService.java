@@ -16,7 +16,7 @@ public class CardSetService {
 
     private final CardSetRepository repository;
 
-    public boolean userHaveRightsToModify(UUID setId, User user) throws SetNotFoundException {
+    public boolean userHaveRightsToModify(UUID setId, String username) throws SetNotFoundException {
         Optional<CardSet> cardSet = repository.findById(setId);
 
         if (cardSet.isEmpty())
@@ -24,7 +24,8 @@ public class CardSetService {
 
         CardSet set = cardSet.get();
 
-        return set.getOwner().equals(user) || set.getEditors().contains(user);
+        return set.getOwner().getUsername().equals(username) ||
+                set.getEditors().stream().anyMatch(u -> u.getUsername().equals(username));
     }
 
 

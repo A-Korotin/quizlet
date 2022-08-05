@@ -6,10 +6,17 @@
 </head>
 <body>
 Add new user
-<div th:if="${message}" th:text="${message}"></div>
+<div style="color: red" th:if="${message}" th:text="${message}"></div>
 <form th:action="@{/registration}" th:object="${user}" method="post">
-    <div><label> User Name : <input type="text" th:field="*{username}"/> </label></div>
-    <div><label> Password: <input type="password" th:field="*{password}"/> </label></div>
+    <div>
+        <label> User Name : <input type="text" th:field="*{username}"/></label>
+        <p style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+    </div>
+    <div>
+        <label> Password: <input type="password" th:field="*{password}"/> </label>
+        <p style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+
+    </div>
     <div><label> Repeat your password: <input type="password" th:field="*{passwordConfirm}"/> </label></div>
     <div><input type="submit" value="Sign up"/></div>
 </form>
