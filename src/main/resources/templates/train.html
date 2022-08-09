@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Training</title>
+</head>
+<body>
+    <h1>We're training now! </h1>
+    <h4>Cards learnt: <span id="current-card-count">0</span>/<span id="total-card-count"></span></h4>
+
+    <button id="still-learning-button" onclick="onStillLearningButtonPressed()">Still learning</button>
+    <div id="area" onclick="swapCard()" style="background-color: lightblue"></div>
+    <button id="know-button" onclick="onKnowButtonPressed()">Know</button>
+
+    <script th:inline="javascript">
+        let cards = [[${cards}]];
+        let totalCardsCount = cards.length;
+        document.getElementById("total-card-count").innerText = totalCardsCount.toString();
+
+        let currentCardIndex = -1;
+        let knownCards = 0;
+
+        let cardArea = document.getElementById("area");
+        let currentCardCount = document.getElementById("current-card-count");
+        let knowButton = document.getElementById("know-button");
+        let stillLearningButton = document.getElementById("still-learning-button");
+        let isTerm = true;
+
+        function updateCard() {
+            if (anyCardsLeft()) {
+                cardArea.innerText = cards[++currentCardIndex].term;
+                isTerm = true;
+            } else {
+
+                knowButton.disabled = true;
+                stillLearningButton.disabled = true;
+                alert("We're done! Good job.")
+            }
+
+        }
+
+        function swapCard() {
+
+            if (isTerm) { //swap to definition
+                cardArea.innerText = cards[currentCardIndex].definition;
+                isTerm = false;
+            } else { //swap to term
+                cardArea.innerText = cards[currentCardIndex].term;
+                isTerm = true;
+            }
+        }
+
+        function onKnowButtonPressed() {
+
+            currentCardCount.innerText = (++knownCards).toString();
+            updateCard();
+        }
+
+        function onStillLearningButtonPressed() {
+            updateCard();
+        }
+
+        function anyCardsLeft() {
+            return currentCardIndex + 1 < totalCardsCount;
+        }
+
+        updateCard();
+
+    </script>
+</body>
+</html>

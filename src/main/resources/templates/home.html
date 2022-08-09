@@ -5,6 +5,16 @@
     <title>Welcome</title>
 </head>
 <body>
+    <script>
+        function search() {
+            let query = document.getElementById("search-bar").value;
+            window.location.replace("/sets?filter=" + query);
+        }
+
+    </script>
+
+    <input id="search-bar" type="text"/>
+    <button class="search-button" onclick="search()">Search</button>
     <h1 style="text-align: center">Hello</h1>
     <div>
         <p><a href="/sets">View all sets</a></p>
