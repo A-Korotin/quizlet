@@ -1,0 +1,115 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: rgb(10, 9, 45);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 55px;
+    font-family: 'Roboto', Arial, sans-serif;
+    column-gap: 70px;
+}
+
+.left-section,
+.right-section {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    justify-content: space-between;
+    color: #FFFFFF;
+}
+
+.left-section {
+    width: 350px;
+
+    min-width: 350px;
+}
+
+.right-section {
+    flex: 1;
+    justify-content: flex-end;
+}
+
+
+.header-button-container button {
+    border: none;
+    background-color: transparent;
+    font-family: 'Roboto', Arial, sans-serif;
+    color: #FFFFFF;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 18px;
+}
+
+.header-button-container:hover button {
+    cursor: pointer;
+    border-bottom: 5px solid cornflowerblue;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+.login-button,
+.logout-button {
+    border: none;
+    color: #FFFFFF;
+    padding: 7px 15px;
+    border-radius: 10px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 18px;
+    transition: background-color 0.2s;
+}
+
+.login-button {
+    background-color: rgb(66, 85, 255);
+}
+
+.login-button:hover {
+    background-color: #877eff;
+    cursor: pointer;
+}
+
+.logout-button {
+    background-color: lightcoral;
+}
+
+.logout-button:hover {
+    background-color: #ffac9d;
+    cursor: pointer;
+}
+
+.search-bar {
+    background-color: rgb(46, 56, 86);
+    border: none;
+    color: #FFFFFF;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 14px;
+    flex: 2;
+    min-width: 100px;
+    max-width: 450px;
+}
+
+.search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 14px;
+}
+
+.search-bar:focus {
+    outline: none;
+}
+
+.username-text {
+    flex: 1;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+}
+

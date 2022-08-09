@@ -1,20 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>Home</title>
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
     <script>
         function search() {
             let query = document.getElementById("search-bar").value;
+            if (query.length === 0) {
+                return;
+            }
             window.location.replace("/sets?filter=" + query);
         }
 
     </script>
 
-    <input id="search-bar" type="text"/>
+    <header class="header">
+        <div class="left-section">
+            <div class="icon">
+                ICON
+            </div>
+            <div class="header-button-container">
+                <button id="home-button">
+                    Home
+                </button>
+            </div>
+            <div class="header-button-container">
+                <button id="user-library-button">
+                    Your library
+                </button>
+            </div>
+            <div class="header-button-container">
+                <button id="create-button">
+                    Create
+                </button>
+            </div>
+        </div>
+        <div class="right-section">
+            <input class="search-bar" type="text" placeholder="Search"/>
+
+            <div class="login-button-container" sec:authorize="isAnonymous()">
+                <button class="login-button">
+                    Login
+                </button>
+            </div>
+            <div class="username-text" sec:authorize="isAuthenticated()">
+                auth completed here
+            </div>
+            <div class="logout-button-container">
+                <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                    <input class="logout-button" type="submit" value="Logout">
+                </form>
+            </div>
+        </div>
+    </header>
+
     <button class="search-button" onclick="search()">Search</button>
+
     <h1 style="text-align: center">Hello</h1>
     <div>
         <p><a href="/sets">View all sets</a></p>

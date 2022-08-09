@@ -8,8 +8,8 @@
     <div class="container" th:object="${sets}" th:each="set : ${sets}">
         <div style="background-color: lightgray;
                     margin-bottom: 10px"
-             class="set-cell">
-            <a th:href="@{/sets/{id}/edit(id = ${set.id})}"><p th:text="${set.title}"></p></a>
+             class="set-container">
+            <a th:href="@{/sets/{id}(id = ${set.id})}"><p th:text="${set.title}"></p></a>
             <p th:text="${set.description}"></p>
         </div>
     </div>

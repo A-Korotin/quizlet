@@ -63,9 +63,18 @@ public class CardSetController {
     }
 
     @GetMapping("/{id}")
-    public String viewSet(@PathVariable UUID id) {
-        System.out.println(cardSetRepository.findAllById(List.of(id)));
-        return "redirect:/home";
+    public String viewSet(Model model,
+                          @PathVariable UUID id) {
+
+        Optional<CardSet> cardSetOptional = cardSetRepository.findById(id);
+
+        if (cardSetOptional.isEmpty()) {
+            // todo not found page
+            return "redirect:/home";
+        }
+
+        model.addAttribute("set", cardSetOptional.get());
+        return "viewSet";
     }
 
     @GetMapping("/{id}/edit")
