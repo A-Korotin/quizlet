@@ -5,13 +5,14 @@
     padding-left: 30px;
     padding-right: 30px;
     background-color: rgb(10, 9, 45);
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 55px;
     font-family: 'Roboto', Arial, sans-serif;
     column-gap: 70px;
+    border-bottom: 1px solid rgb(40, 46, 62);
 }
 
 .left-section,

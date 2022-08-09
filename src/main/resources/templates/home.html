@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" href="/styles/header.css">
+    <link href="/static/styles/header.css" th:href="@{/styles/header.css}" rel="stylesheet"/>
+    <link href="/static/styles/home.css" th:href="@{/styles/home.css}" rel="stylesheet"/>
+    <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <script>
@@ -21,7 +25,7 @@
     </script>
 
     <header class="header">
-        <div class="left-section">
+        <nav class="left-section">
             <div class="icon">
                 ICON
             </div>
@@ -40,7 +44,7 @@
                     Create
                 </button>
             </div>
-        </div>
+        </nav>
         <div class="right-section">
             <input class="search-bar" type="text" placeholder="Search"/>
 
@@ -50,7 +54,7 @@
                 </button>
             </div>
             <div class="username-text" sec:authorize="isAuthenticated()">
-                auth completed here
+                ${#authentication.getUsername()}
             </div>
             <div class="logout-button-container">
                 <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
@@ -60,11 +64,119 @@
         </div>
     </header>
 
-    <button class="search-button" onclick="search()">Search</button>
+    <main class="page-content">
+        <section class="greeting-section">
+            <div class="info">
+                <p id="greeting-title">
+                    Welcome!
+                </p>
+                <p id="greeting-sub-title">
+                    Thank you for visiting!
+                    You can check my other projects using
+                    <a class="github-link"
+                       href="https://github.com/A-Korotin"
+                       target="_blank">
+                        this
+                    </a> link
+                </p>
+            </div>
 
-    <h1 style="text-align: center">Hello</h1>
-    <div>
-        <p><a href="/sets">View all sets</a></p>
-    </div>
+            <img class="github-icon"
+                 th:src="@{/imgs/github-icon-white-5.jpg}"
+                 src="/static/imgs/github-icon-white-5.jpg"
+                 alt="github image"/>
+        </section>
+
+        <section class="ideas-section">
+            <div class="heading">
+                Ideas
+            </div>
+            <section class="ideas-grid">
+                <div class="idea">
+                    <p class="title">
+                        Some title
+                    </p>
+                    <p class="sub-title">
+                        Some sub title
+                    </p>
+                    <p class="author">
+                        Author
+                    </p>
+                </div>
+
+                <div class="idea">
+                    <p class="title">
+                        Some title
+                    </p>
+                    <p class="sub-title">
+                        Some sub title
+                    </p>
+                    <p class="author">
+                        Author
+                    </p>
+                </div>
+
+                <div class="idea">
+                    <p class="title">
+                        Some title
+                    </p>
+                    <p class="sub-title">
+                        Some sub title
+                    </p>
+                    <p class="author">
+                        Author
+                    </p>
+                </div>
+
+                <div class="idea">
+                    <p class="title">
+                        Some title
+                    </p>
+                    <p class="sub-title">
+                        Some sub title
+                    </p>
+                    <p class="author">
+                        Author
+                    </p>
+                </div>
+
+                <div class="idea">
+                    <p class="title">
+                        Some title
+                    </p>
+                    <p class="sub-title">
+                        Some sub title
+                    </p>
+                    <p class="author">
+                        Author
+                    </p>
+                </div>
+
+                <div class="idea">
+                    <p class="title">
+                        Some title
+                    </p>
+                    <p class="sub-title">
+                        Some sub title
+                    </p>
+                    <p class="author">
+                        Author
+                    </p>
+                </div>
+
+                <div class="idea">
+                    <p class="title">
+                        Some title
+                    </p>
+                    <p class="sub-title">
+                        Some sub title
+                    </p>
+                    <p class="author">
+                        Author
+                    </p>
+                </div>
+            </section>
+        </section>
+    </main>
 </body>
 </html>

@@ -1,0 +1,94 @@
+/* outline current page*/
+
+#home-button {
+    border-bottom: 5px solid cornflowerblue;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 100px 0 100px;
+}
+
+.greeting-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 100px;
+    background-color: rgb(40, 46, 62);
+    border-radius: 15px;
+}
+
+.github-icon {
+    margin-right: 20px;
+    height: 200px;
+    width: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.greeting-section p {
+    color: #FFFFFF;
+    font-family: 'Roboto', Arial, sans-serif;
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+#greeting-title {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+#title {
+    font-size: 35px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+#sub-title {
+    margin-top: 45px;
+    line-height: 30px;
+}
+
+.ideas-section {
+    color: white;
+    margin-top: 25px;
+}
+
+.ideas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 20px;
+    column-gap: 20px;
+}
+
+.idea {
+    background-color: #2e3856;
+    border-radius: 10px;
+}
+
+.idea p {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin-left: 10px;
+}
+
+.idea .title {
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.idea .sub-title {
+    margin-top: 10px;
+}
+
+.idea .author {
+    color: #939bb4;
+}
