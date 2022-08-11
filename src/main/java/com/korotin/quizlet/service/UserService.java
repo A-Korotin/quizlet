@@ -23,19 +23,22 @@ public class UserService implements UserDetailsService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    private BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder;
 
-    @Autowired
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
                        BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
+    }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 
     public User findUserById(UUID id) {

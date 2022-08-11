@@ -1,9 +1,13 @@
 package com.korotin.quizlet.controller;
 
 import com.korotin.quizlet.domain.CardSet;
+import com.korotin.quizlet.domain.User;
 import com.korotin.quizlet.repository.CardSetRepository;
 import com.korotin.quizlet.service.CardSetService;
+import com.korotin.quizlet.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +25,7 @@ public class CardSetController {
 
     private final CardSetRepository cardSetRepository;
     private final CardSetService cardSetService;
+    private final UserService userService;
 
     @GetMapping("/create")
     public String create(Model model,
@@ -33,6 +38,11 @@ public class CardSetController {
     @PostMapping("/create")
     public String addSet(@ModelAttribute CardSet cardSet) {
         cardSet.getCards().removeIf(c -> c.getTerm().isEmpty());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User owner = (User) userService.loadUserByUsername(authentication.getName());
+        cardSet.setOwner(owner);
 
         System.out.println(cardSetRepository.save(cardSet));
         return "redirect:/home";
@@ -75,6 +85,27 @@ public class CardSetController {
 
         model.addAttribute("set", cardSetOptional.get());
         return "viewSet";
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public String deleteSet(@PathVariable UUID id) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+//        if (!cardSetService.userHaveRightsToModify(id, authentication.getName())) {
+//            // todo no rights to access page
+//            return "redirect:/home";
+//        }
+
+        if (!cardSetRepository.existsById(id)) {
+            // todo not found page
+            return "redirect:/sets";
+        }
+
+        cardSetRepository.deleteById(id);
+
+        return "redirect:/sets";
     }
 
     @GetMapping("/{id}/edit")

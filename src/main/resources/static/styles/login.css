@@ -1,0 +1,102 @@
+body {
+    background-color: rgb(10, 9, 45);
+    color: #FFFFFF;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    margin-top: 30px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.login-section,
+.password-section {
+    margin-top: 20px;
+}
+
+.login-section .hint,
+.password-section .hint{
+    font-family: 'Roboto', Arial, sans-serif;
+    margin-bottom: 7px;
+    font-size: 20px;
+}
+
+.username-field,
+.password-field {
+    border: none;
+    background-color: rgb(46, 56, 86);
+    color: #FFFFFF;
+    width: 400px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+.username-field::placeholder,
+.password-field::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 18px;
+}
+
+.submit-section {
+    text-align: center;
+}
+
+.submit-button {
+    color: #FFFFFF;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 20px;
+    background-color: rgb(66, 85, 255);
+    margin-top: 20px;
+
+    border: none;
+    border-radius: 20px;
+    padding: 5px 15px;
+
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #89a5ff;
+}
+
+.sign-up-section {
+    width: 420px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    margin-top: 10px;
+}
+
+.sign-up-section .hint {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 18px;
+}
+
+.sign-up-section .href {
+    color: #4e76ff;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 18px;
+}
+
+.error-container {
+    text-align: center;
+    font-size: 25px;
+    color: lightcoral;
+    font-family: 'Roboto', Arial, sans-serif;
+    margin-top: 10px;
+}
+
+
+

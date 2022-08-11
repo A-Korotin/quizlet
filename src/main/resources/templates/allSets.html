@@ -1,18 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>View all sets</title>
-</head>
-<body>
-    <div class="container" th:object="${sets}" th:each="set : ${sets}">
-        <div style="background-color: lightgray;
-                    margin-bottom: 10px"
-             class="set-container">
-            <a th:href="@{/sets/{id}(id = ${set.id})}"><p th:text="${set.title}"></p></a>
-            <p th:text="${set.description}"></p>
-        </div>
-    </div>
+    <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
+    <link href="/static/styles/header.css" th:href="@{/styles/header.css}" rel="stylesheet"/>
+    <link href="/static/styles/allSets.css" th:href="@{/styles/allSets.css}" rel="stylesheet"/>
+    <script type="text/javascript"
+            src="/static/scripts/header.js"
+            th:src="@{/scripts/header.js}"></script>
 
-</body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+    <body>
+        <header class="header">
+            <nav class="left-section">
+                <div class="icon">
+                    ICON
+                </div>
+                <div class="header-button-container">
+                    <button id="home-button"
+                            onclick="redirect('/home')">
+                        Home
+                    </button>
+                </div>
+                <div class="header-button-container">
+                    <button id="create-button"
+                            onclick="redirect('/sets/create')">
+                        Create
+                    </button>
+                </div>
+                <div class="header-button-container">
+                    <button id="search-button"
+                            onclick="redirect('/sets')">
+                        Search
+                    </button>
+                </div>
+            </nav>
+            <div class="right-section">
+                <input class="search-bar" type="text" placeholder="Search"/>
+
+                <div class="login-button-container" sec:authorize="isAnonymous()">
+                    <button class="login-button"
+                            onclick="redirect('/login')">
+                        Login
+                    </button>
+                </div>
+                <div class="username-text"
+                     sec:authorize="isAuthenticated()"
+                     th:text="${#authentication.getName()}">
+                    #auth.getUsername()
+                </div>
+                <div class="logout-button-container">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                        <input class="logout-button" type="submit" value="Logout">
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <section class="sets-container" th:object="${sets}" th:each="set : ${sets}">
+            <div class="set">
+                <div class="title" th:text="${set.title}">Title</div>
+                <div class="sub-title" th:text="${set.description}">Sub title</div>
+                <div class="cards-amount" th:text="${#lists.size(set.cards) + ' cards'} ">56 cards</div>
+                <div class="author" th:text="${set.owner.username}">Author</div>
+            </div>
+        </section>
+
+    </body>
 </html>

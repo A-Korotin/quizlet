@@ -9,6 +9,7 @@
         <div class="set-title" th:text="*{title}"></div>
         <div class="set-description" th:text="*{description}"></div>
         <input type="checkbox" disabled th:checked="*{isPublic}"/>
+        <div class="owner" th:text="${set.owner.username}"></div>
 
         <div class="card-container" th:each="card: ${set.cards}">
             <div class="card-row">
@@ -16,6 +17,10 @@
                 <div class="card-definition" th:text="${card.definition}"></div>
             </div>
         </div>
+
+        <form method="#" th:action="@{/sets/{id}(id = ${set.id})}" th:method="delete">
+            <input type="submit" value="DELETE">
+        </form>
     </div>
 </body>
 </html>

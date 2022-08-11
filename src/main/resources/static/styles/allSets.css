@@ -1,0 +1,51 @@
+/* outline current page */
+
+#search-button {
+    border-bottom: 5px solid cornflowerblue;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+.sets-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 100px 100px 0 100px;
+}
+
+.set * {
+    color: white;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+.set {
+    background-color: rgb(40, 46, 62);
+    padding: 10px 20px;
+    border-radius: 15px;
+    transition: opacity 0.2s;
+}
+
+.set:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.set .title {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.set .sub-title {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.set .cards-amount {
+    color: #939bb4;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.set .author {
+    margin-top: 20px;
+}

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public class CardSet {
     private User owner;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<User> editors;
+    private List<User> editors = new ArrayList<>();
 
     public void clearEmptyCards() {
         cards.removeIf(c -> {

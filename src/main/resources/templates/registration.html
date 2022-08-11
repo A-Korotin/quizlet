@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Spring Security Example </title>
-</head>
-<body>
-Add new user
-<div style="color: red" th:if="${message}" th:text="${message}"></div>
-<form th:action="@{/registration}" th:object="${user}" method="post">
-    <div>
-        <label> User Name : <input type="text" th:field="*{username}"/></label>
-        <p style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-    </div>
-    <div>
-        <label> Password: <input type="password" th:field="*{password}"/> </label>
-        <p style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+    <head>
+        <title>Spring Security Example </title>
+    </head>
+    <body>
+        <main></main>
+        <div style="color: red" th:if="${message}" th:text="${message}"></div>
+        <form th:action="@{/registration}" th:object="${user}" method="post">
+            <div>
+                <label> User Name : <input type="text" th:field="*{username}"/></label>
+                <p style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+            </div>
+            <div>
+                <label> Password: <input type="password" th:field="*{password}"/> </label>
+                <p style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 
-    </div>
-    <div><label> Repeat your password: <input type="password" th:field="*{passwordConfirm}"/> </label></div>
-    <div><input type="submit" value="Sign up"/></div>
-</form>
-</body>
+            </div>
+            <div><label> Repeat your password: <input type="password" th:field="*{passwordConfirm}"/> </label></div>
+            <div><input type="submit" value="Sign up"/></div>
+        </form>
+    </body>
 </html>

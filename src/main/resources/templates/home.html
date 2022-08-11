@@ -6,6 +6,11 @@
     <link href="/static/styles/header.css" th:href="@{/styles/header.css}" rel="stylesheet"/>
     <link href="/static/styles/home.css" th:href="@{/styles/home.css}" rel="stylesheet"/>
     <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
+    <link href="/static/scripts/header.js" th:href="@{/scripts/header.js}" rel="script">
+    <script type="text/javascript"
+            src="/static/scripts/header.js"
+            th:src="@{/scripts/header.js}"></script>
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,16 +18,6 @@
 
 </head>
 <body>
-    <script>
-        function search() {
-            let query = document.getElementById("search-bar").value;
-            if (query.length === 0) {
-                return;
-            }
-            window.location.replace("/sets?filter=" + query);
-        }
-
-    </script>
 
     <header class="header">
         <nav class="left-section">
@@ -30,18 +25,21 @@
                 ICON
             </div>
             <div class="header-button-container">
-                <button id="home-button">
+                <button id="home-button"
+                        onclick="redirect('/home')">
                     Home
                 </button>
             </div>
             <div class="header-button-container">
-                <button id="user-library-button">
-                    Your library
+                <button id="create-button"
+                        onclick="redirect('/sets/create')">
+                    Create
                 </button>
             </div>
             <div class="header-button-container">
-                <button id="create-button">
-                    Create
+                <button id="search-button"
+                        onclick="redirect('/sets')">
+                    Search
                 </button>
             </div>
         </nav>
@@ -49,12 +47,15 @@
             <input class="search-bar" type="text" placeholder="Search"/>
 
             <div class="login-button-container" sec:authorize="isAnonymous()">
-                <button class="login-button">
+                <button class="login-button"
+                        onclick="redirect('/login')">
                     Login
                 </button>
             </div>
-            <div class="username-text" sec:authorize="isAuthenticated()">
-                ${#authentication.getUsername()}
+            <div class="username-text"
+                 sec:authorize="isAuthenticated()"
+                 th:text="${#authentication.getName()}">
+                #auth.getUsername()
             </div>
             <div class="logout-button-container">
                 <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
@@ -87,12 +88,43 @@
                  alt="github image"/>
         </section>
 
-        <section class="ideas-section">
-            <div class="heading">
-                Ideas
+        <section class="user-sets" sec:authorize="isAuthenticated()">
+            <div class="nothing-to-show" th:if="${ownedSets.empty and editedSets.empty}">
+                Nothing :( Your sets will be listed here
             </div>
+            <div class="owned-sets" th:unless="${ownedSets.empty}">
+                <p class="heading">
+                    Owned sets
+                </p>
+                <div class="grid">
+                    <div class="set" th:each="set: ${ownedSets}"
+                         th:onclick="redirect([[@{/sets/{id}(id = ${set.id})}]])">
+                        <p class="title" th:text="${set.title}"></p>
+                        <p class="sub-title" th:text="${set.description}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="allowed-to-edit-sets" th:unless="${editedSets.empty}">
+                <p class="heading">
+                    Allowed to edit
+                </p>
+
+                <div class="grid">
+                    <div class="set" th:each="set: ${editedSets}">
+                        <p class="title" th:text="*{title}"></p>
+                        <p class="sub-title" th:text="*{description}"></p>
+                        <p class="author" th:text="*{owner.username}"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="ideas-section" sec:authorize="isAnonymous()">
+            <p class="heading">
+                Ideas
+            </p>
             <section class="ideas-grid">
-                <div class="idea">
+                <div class="set">
                     <p class="title">
                         Some title
                     </p>
@@ -104,7 +136,7 @@
                     </p>
                 </div>
 
-                <div class="idea">
+                <div class="set">
                     <p class="title">
                         Some title
                     </p>
@@ -116,7 +148,7 @@
                     </p>
                 </div>
 
-                <div class="idea">
+                <div class="set">
                     <p class="title">
                         Some title
                     </p>
@@ -128,7 +160,7 @@
                     </p>
                 </div>
 
-                <div class="idea">
+                <div class="set">
                     <p class="title">
                         Some title
                     </p>
@@ -140,7 +172,7 @@
                     </p>
                 </div>
 
-                <div class="idea">
+                <div class="set">
                     <p class="title">
                         Some title
                     </p>
@@ -152,7 +184,7 @@
                     </p>
                 </div>
 
-                <div class="idea">
+                <div class="set">
                     <p class="title">
                         Some title
                     </p>
@@ -164,7 +196,7 @@
                     </p>
                 </div>
 
-                <div class="idea">
+                <div class="set">
                     <p class="title">
                         Some title
                     </p>

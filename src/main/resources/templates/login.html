@@ -1,21 +1,55 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Log in</title>
-</head>
-<body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
-<a href="/registration">Add new User</a>
-</body>
+    <head>
+        <link rel="stylesheet"
+              href="/static/styles/login.css"
+              th:href="@{/styles/login.css}">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <title>Log in</title>
+    </head>
+    <body>
+        <main class="main-section">
+            <div class="title">
+                Log in
+            </div>
+            <div class="error-container" th:if="${param.error}">
+                Invalid username or password.
+            </div>
+            <div class="form">
+                <form th:action="@{/login}" method="post">
+                    <section class="login-section">
+                        <div class="hint">
+                            Login*
+                        </div>
+                        <input class="username-field"
+                               type="text"
+                               name="username"
+                               placeholder="sampleUsername"/>
+                    </section>
+                    <section class="password-section">
+                        <div class="hint">
+                            Password*
+                        </div>
+                        <input class="password-field"
+                               type="password"
+                               name="password"
+                               placeholder="Min. 6 characters"/>
+                    </section>
+                    <section class="submit-section">
+                        <input class="submit-button"
+                               type="submit"
+                               value="Sign in"/>
+                    </section>
+                </form>
+                <section class="sign-up-section">
+                    <p class="hint"> Don't have an account yet?</p>
+                    <a class="href" href="/registration">Sign up</a>
+                </section>
+            </div>
+        </main>
+    </body>
 </html>
