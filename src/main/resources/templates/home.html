@@ -10,15 +10,16 @@
     <script type="text/javascript"
             src="/static/scripts/header.js"
             th:src="@{/scripts/header.js}"></script>
+    <script type="text/javascript"
+            src="/static/scripts/general.js"
+            th:src="@{/scripts/general.js}"></script>
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
 </head>
-<body>
-
+<body onload="setupHeaderSearch()">
     <header class="header">
         <nav class="left-section">
             <div class="icon">
@@ -44,7 +45,10 @@
             </div>
         </nav>
         <div class="right-section">
-            <input class="search-bar" type="text" placeholder="Search"/>
+            <input class="search-bar"
+                   type="text"
+                   id="search-bar"
+                   placeholder="Search"/>
 
             <div class="login-button-container" sec:authorize="isAnonymous()">
                 <button class="login-button"

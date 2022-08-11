@@ -9,13 +9,16 @@
     <script type="text/javascript"
             src="/static/scripts/header.js"
             th:src="@{/scripts/header.js}"></script>
+    <script type="text/javascript"
+            src="/static/scripts/general.js"
+            th:src="@{/scripts/general.js}"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
-    <body>
+    <body onload="setupHeaderSearch(); fillCurrentSearch();">
         <header class="header">
             <nav class="left-section">
                 <div class="icon">
@@ -41,7 +44,10 @@
                 </div>
             </nav>
             <div class="right-section">
-                <input class="search-bar" type="text" placeholder="Search"/>
+                <input class="search-bar"
+                       type="text"
+                       id="search-bar"
+                       placeholder="Search"/>
 
                 <div class="login-button-container" sec:authorize="isAnonymous()">
                     <button class="login-button"
@@ -62,8 +68,18 @@
             </div>
         </header>
 
-        <section class="sets-container" th:object="${sets}" th:each="set : ${sets}">
-            <div class="set">
+        <div class="page-heading" th:if="${param.filter}" >
+            Search result:
+        </div>
+        <!--no filter-->
+        <div class="page-heading" th:unless="${param.filter}">
+            All sets:
+        </div>
+        <section class="sets-container">
+            <div class="set"
+                 th:object="${sets}"
+                 th:each="set : ${sets}"
+                 th:onclick="redirect([[@{/sets/{id}(id = ${set.id})}]])">
                 <div class="title" th:text="${set.title}">Title</div>
                 <div class="sub-title" th:text="${set.description}">Sub title</div>
                 <div class="cards-amount" th:text="${#lists.size(set.cards) + ' cards'} ">56 cards</div>

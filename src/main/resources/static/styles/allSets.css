@@ -6,10 +6,19 @@
     border-radius: 3px;
 }
 
+.page-heading {
+    color: #FFFFFF;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 40px;
+    padding-top: 20px;
+    margin-left: 30px;
+}
+
 .sets-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    padding: 100px 100px 0 100px;
+    padding: 50px 100px 0 100px;
+    gap: 20px 20px;
 }
 
 .set * {

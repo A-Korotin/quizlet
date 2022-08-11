@@ -39,10 +39,7 @@ public class CardSetController {
     public String addSet(@ModelAttribute CardSet cardSet) {
         cardSet.getCards().removeIf(c -> c.getTerm().isEmpty());
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        User owner = (User) userService.loadUserByUsername(authentication.getName());
-        cardSet.setOwner(owner);
+        cardSet.setOwner(getCurrentUser());
 
         System.out.println(cardSetRepository.save(cardSet));
         return "redirect:/home";
@@ -59,13 +56,13 @@ public class CardSetController {
             model.addAttribute("sets", sets);
             return "allSets";
         }
-
+        String filterLowerCase = filter.toLowerCase();
         List<CardSet> filteredSets = cardSetRepository.findAll()
                 .stream().filter(set -> {
-                    String title = set.getTitle();
-                    String description = set.getDescription();
-                    return  title.contains(filter) ||
-                            description.contains(filter);
+                    String title = set.getTitle().toLowerCase();
+                    String description = set.getDescription().toLowerCase();
+                    return  title.contains(filterLowerCase) ||
+                            description.contains(filterLowerCase);
                 }).collect(Collectors.toList());
 
         model.addAttribute("sets", filteredSets);
@@ -134,8 +131,14 @@ public class CardSetController {
         // todo check owner/editor of chosen set
         System.out.println(editedCardSet);
         editedCardSet.clearEmptyCards();
+        editedCardSet.setOwner(getCurrentUser());
         System.out.println(cardSetRepository.save(editedCardSet));
         return "redirect:/home";
+    }
+
+    private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (User) userService.loadUserByUsername(authentication.getName());
     }
 
 }
