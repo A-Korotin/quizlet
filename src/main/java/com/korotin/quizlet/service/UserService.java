@@ -4,7 +4,6 @@ import com.korotin.quizlet.domain.Role;
 import com.korotin.quizlet.domain.User;
 import com.korotin.quizlet.repository.RoleRepository;
 import com.korotin.quizlet.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

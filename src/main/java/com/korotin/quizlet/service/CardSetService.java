@@ -1,11 +1,9 @@
 package com.korotin.quizlet.service;
 
 import com.korotin.quizlet.domain.CardSet;
-import com.korotin.quizlet.domain.User;
 import com.korotin.quizlet.exception.SetNotFoundException;
 import com.korotin.quizlet.repository.CardSetRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
