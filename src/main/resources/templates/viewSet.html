@@ -1,26 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>View set</title>
-</head>
-<body>
-    <div class="container" th:object="${set}">
-        <div class="set-title" th:text="*{title}"></div>
-        <div class="set-description" th:text="*{description}"></div>
-        <input type="checkbox" disabled th:checked="*{isPublic}"/>
-        <div class="owner" th:text="${set.owner.username}"></div>
+<html lang="en"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>View set</title>
 
-        <div class="card-container" th:each="card: ${set.cards}">
-            <div class="card-row">
-                <div class="card-term" th:text="${card.term}"></div>
-                <div class="card-definition" th:text="${card.definition}"></div>
+        <link href="/static/styles/header.css" th:href="@{/styles/header.css}" rel="stylesheet"/>
+        <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
+        <link href="/static/styles/viewSet.css" th:href="@{/styles/viewSet.css}" rel="stylesheet"/>
+        <script type="text/javascript"
+                src="/static/scripts/header.js"
+                th:src="@{/scripts/header.js}"></script>
+        <script type="text/javascript"
+                src="/static/scripts/general.js"
+                th:src="@{/scripts/general.js}"></script>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header class="header">
+            <nav class="left-section">
+                <div class="icon">
+                    ICON
+                </div>
+                <div class="header-button-container">
+                    <button id="home-button"
+                            onclick="redirect('/home')">
+                        Home
+                    </button>
+                </div>
+                <div class="header-button-container">
+                    <button id="create-button"
+                            onclick="redirect('/sets/create')">
+                        Create
+                    </button>
+                </div>
+                <div class="header-button-container">
+                    <button id="search-button"
+                            onclick="redirect('/sets')">
+                        Search
+                    </button>
+                </div>
+            </nav>
+            <div class="right-section">
+                <input class="search-bar"
+                       type="text"
+                       id="search-bar"
+                       placeholder="Search"/>
+
+                <div class="login-button-container" sec:authorize="isAnonymous()">
+                    <button class="login-button"
+                            onclick="redirect('/login')">
+                        Login
+                    </button>
+                </div>
+                <div class="username-text"
+                     sec:authorize="isAuthenticated()"
+                     th:text="${#authentication.getName()}">
+                    #auth.getUsername()
+                </div>
+                <div class="logout-button-container">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                        <input class="logout-button" type="submit" value="Logout">
+                    </form>
+                </div>
             </div>
-        </div>
+        </header>
 
-        <form method="#" th:action="@{/sets/{id}(id = ${set.id})}" th:method="delete">
-            <input type="submit" value="DELETE">
-        </form>
-    </div>
-</body>
+        <main class="page-content" th:object="${set}">
+            <section class="set-info">
+                <div class="header-row">
+                    <div class="title" th:text="*{title}">
+                        Title
+                    </div>
+                    <button class="edit-button"
+                            th:if="${userIsEditor}"
+                            onclick="redirect(document.location + '/edit')">
+                        <img class="edit-icon"
+                             th:src="@{/imgs/edit-icon.svg}"
+                             src="/static/imgs/edit-icon.svg"
+                             alt="edit icon">
+                    </button>
+                </div>
+                <div class="body">
+                    <div class="set-description" th:text="*{description}">
+                        description
+                    </div>
+                    <div class="access-modifier"
+                         th:text="*{isPublic} ? 'Public set': 'Private set'">
+                        Access modifier
+                    </div>
+                    <div class="owner-section">
+                        <p class="title">
+                            Owner:
+                        </p>
+                        <div class="owner-name" th:text="${set.owner.username}">
+                            ${owner.username}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card-section">
+                <div class="title">
+                    Cards:
+                </div>
+                <div class="card-container" th:each="card: ${set.cards}">
+                    <div class="card-row">
+                        <div class="term"
+                             th:text="${card.term}">
+                            Term
+                        </div>
+                        <div class="definition"
+                             th:text="${card.definition}">
+                            Definition
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
 </html>

@@ -1,218 +1,217 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-    <link href="/static/styles/header.css" th:href="@{/styles/header.css}" rel="stylesheet"/>
-    <link href="/static/styles/home.css" th:href="@{/styles/home.css}" rel="stylesheet"/>
-    <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
-    <link href="/static/scripts/header.js" th:href="@{/scripts/header.js}" rel="script">
-    <script type="text/javascript"
-            src="/static/scripts/header.js"
-            th:src="@{/scripts/header.js}"></script>
-    <script type="text/javascript"
-            src="/static/scripts/general.js"
-            th:src="@{/scripts/general.js}"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+        <link href="/static/styles/header.css" th:href="@{/styles/header.css}" rel="stylesheet"/>
+        <link href="/static/styles/home.css" th:href="@{/styles/home.css}" rel="stylesheet"/>
+        <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
+        <script type="text/javascript"
+                src="/static/scripts/header.js"
+                th:src="@{/scripts/header.js}"></script>
+        <script type="text/javascript"
+                src="/static/scripts/general.js"
+                th:src="@{/scripts/general.js}"></script>
 
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body onload="setupHeaderSearch()">
-    <header class="header">
-        <nav class="left-section">
-            <div class="icon">
-                ICON
-            </div>
-            <div class="header-button-container">
-                <button id="home-button"
-                        onclick="redirect('/home')">
-                    Home
-                </button>
-            </div>
-            <div class="header-button-container">
-                <button id="create-button"
-                        onclick="redirect('/sets/create')">
-                    Create
-                </button>
-            </div>
-            <div class="header-button-container">
-                <button id="search-button"
-                        onclick="redirect('/sets')">
-                    Search
-                </button>
-            </div>
-        </nav>
-        <div class="right-section">
-            <input class="search-bar"
-                   type="text"
-                   id="search-bar"
-                   placeholder="Search"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body onload="setupHeaderSearch()">
+        <header class="header">
+            <nav class="left-section">
+                <div class="icon">
+                    ICON
+                </div>
+                <div class="header-button-container">
+                    <button id="home-button"
+                            onclick="redirect('/home')">
+                        Home
+                    </button>
+                </div>
+                <div class="header-button-container">
+                    <button id="create-button"
+                            onclick="redirect('/sets/create')">
+                        Create
+                    </button>
+                </div>
+                <div class="header-button-container">
+                    <button id="search-button"
+                            onclick="redirect('/sets')">
+                        Search
+                    </button>
+                </div>
+            </nav>
+            <div class="right-section">
+                <input class="search-bar"
+                       type="text"
+                       id="search-bar"
+                       placeholder="Search"/>
 
-            <div class="login-button-container" sec:authorize="isAnonymous()">
-                <button class="login-button"
-                        onclick="redirect('/login')">
-                    Login
-                </button>
+                <div class="login-button-container" sec:authorize="isAnonymous()">
+                    <button class="login-button"
+                            onclick="redirect('/login')">
+                        Login
+                    </button>
+                </div>
+                <div class="username-text"
+                     sec:authorize="isAuthenticated()"
+                     th:text="${#authentication.getName()}">
+                    #auth.getUsername()
+                </div>
+                <div class="logout-button-container">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                        <input class="logout-button" type="submit" value="Logout">
+                    </form>
+                </div>
             </div>
-            <div class="username-text"
-                 sec:authorize="isAuthenticated()"
-                 th:text="${#authentication.getName()}">
-                #auth.getUsername()
-            </div>
-            <div class="logout-button-container">
-                <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-                    <input class="logout-button" type="submit" value="Logout">
-                </form>
-            </div>
-        </div>
-    </header>
+        </header>
 
-    <main class="page-content">
-        <section class="greeting-section">
-            <div class="info">
-                <p id="greeting-title">
-                    Welcome!
-                </p>
-                <p id="greeting-sub-title">
-                    Thank you for visiting!
-                    You can check my other projects using
-                    <a class="github-link"
-                       href="https://github.com/A-Korotin"
-                       target="_blank">
-                        this
-                    </a> link
-                </p>
-            </div>
+        <main class="page-content">
+            <section class="greeting-section">
+                <div class="info">
+                    <p id="greeting-title">
+                        Welcome!
+                    </p>
+                    <p id="greeting-sub-title">
+                        Thank you for visiting!
+                        You can check my other projects using
+                        <a class="github-link"
+                           href="https://github.com/A-Korotin"
+                           target="_blank">
+                            this
+                        </a> link
+                    </p>
+                </div>
 
-            <img class="github-icon"
-                 th:src="@{/imgs/github-icon-white-5.jpg}"
-                 src="/static/imgs/github-icon-white-5.jpg"
-                 alt="github image"/>
-        </section>
+                <img class="github-icon"
+                     th:src="@{/imgs/github-icon-white-5.jpg}"
+                     src="/static/imgs/github-icon-white-5.jpg"
+                     alt="github image"/>
+            </section>
 
-        <section class="user-sets" sec:authorize="isAuthenticated()">
-            <div class="nothing-to-show" th:if="${ownedSets.empty and editedSets.empty}">
-                Nothing :( Your sets will be listed here
-            </div>
-            <div class="owned-sets" th:unless="${ownedSets.empty}">
-                <p class="heading">
-                    Owned sets
-                </p>
-                <div class="grid">
-                    <div class="set" th:each="set: ${ownedSets}"
-                         th:onclick="redirect([[@{/sets/{id}(id = ${set.id})}]])">
-                        <p class="title" th:text="${set.title}"></p>
-                        <p class="sub-title" th:text="${set.description}"></p>
+            <section class="user-sets" sec:authorize="isAuthenticated()">
+                <div class="nothing-to-show" th:if="${ownedSets.empty and editedSets.empty}">
+                    Nothing :( Your sets will be listed here
+                </div>
+                <div class="owned-sets" th:unless="${ownedSets.empty}">
+                    <p class="heading">
+                        Owned sets
+                    </p>
+                    <div class="grid">
+                        <div class="set" th:each="set: ${ownedSets}"
+                             th:onclick="redirect([[@{/sets/{id}(id = ${set.id})}]])">
+                            <p class="title" th:text="${set.title}"></p>
+                            <p class="sub-title" th:text="${set.description}"></p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="allowed-to-edit-sets" th:unless="${editedSets.empty}">
-                <p class="heading">
-                    Allowed to edit
-                </p>
+                <div class="allowed-to-edit-sets" th:unless="${editedSets.empty}">
+                    <p class="heading">
+                        Allowed to edit
+                    </p>
 
-                <div class="grid">
-                    <div class="set" th:each="set: ${editedSets}">
-                        <p class="title" th:text="*{title}"></p>
-                        <p class="sub-title" th:text="*{description}"></p>
-                        <p class="author" th:text="*{owner.username}"></p>
+                    <div class="grid">
+                        <div class="set" th:each="set: ${editedSets}">
+                            <p class="title" th:text="*{title}"></p>
+                            <p class="sub-title" th:text="*{description}"></p>
+                            <p class="author" th:text="*{owner.username}"></p>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
-        <section class="ideas-section" sec:authorize="isAnonymous()">
-            <p class="heading">
-                Ideas
-            </p>
-            <section class="ideas-grid">
-                <div class="set">
-                    <p class="title">
-                        Some title
-                    </p>
-                    <p class="sub-title">
-                        Some sub title
-                    </p>
-                    <p class="author">
-                        Author
-                    </p>
-                </div>
-
-                <div class="set">
-                    <p class="title">
-                        Some title
-                    </p>
-                    <p class="sub-title">
-                        Some sub title
-                    </p>
-                    <p class="author">
-                        Author
-                    </p>
-                </div>
-
-                <div class="set">
-                    <p class="title">
-                        Some title
-                    </p>
-                    <p class="sub-title">
-                        Some sub title
-                    </p>
-                    <p class="author">
-                        Author
-                    </p>
-                </div>
-
-                <div class="set">
-                    <p class="title">
-                        Some title
-                    </p>
-                    <p class="sub-title">
-                        Some sub title
-                    </p>
-                    <p class="author">
-                        Author
-                    </p>
-                </div>
-
-                <div class="set">
-                    <p class="title">
-                        Some title
-                    </p>
-                    <p class="sub-title">
-                        Some sub title
-                    </p>
-                    <p class="author">
-                        Author
-                    </p>
-                </div>
-
-                <div class="set">
-                    <p class="title">
-                        Some title
-                    </p>
-                    <p class="sub-title">
-                        Some sub title
-                    </p>
-                    <p class="author">
-                        Author
-                    </p>
-                </div>
-
-                <div class="set">
-                    <p class="title">
-                        Some title
-                    </p>
-                    <p class="sub-title">
-                        Some sub title
-                    </p>
-                    <p class="author">
-                        Author
-                    </p>
                 </div>
             </section>
-        </section>
-    </main>
-</body>
+            <section class="ideas-section" sec:authorize="isAnonymous()">
+                <p class="heading">
+                    Ideas
+                </p>
+                <section class="ideas-grid">
+                    <div class="set">
+                        <p class="title">
+                            Some title
+                        </p>
+                        <p class="sub-title">
+                            Some sub title
+                        </p>
+                        <p class="author">
+                            Author
+                        </p>
+                    </div>
+
+                    <div class="set">
+                        <p class="title">
+                            Some title
+                        </p>
+                        <p class="sub-title">
+                            Some sub title
+                        </p>
+                        <p class="author">
+                            Author
+                        </p>
+                    </div>
+
+                    <div class="set">
+                        <p class="title">
+                            Some title
+                        </p>
+                        <p class="sub-title">
+                            Some sub title
+                        </p>
+                        <p class="author">
+                            Author
+                        </p>
+                    </div>
+
+                    <div class="set">
+                        <p class="title">
+                            Some title
+                        </p>
+                        <p class="sub-title">
+                            Some sub title
+                        </p>
+                        <p class="author">
+                            Author
+                        </p>
+                    </div>
+
+                    <div class="set">
+                        <p class="title">
+                            Some title
+                        </p>
+                        <p class="sub-title">
+                            Some sub title
+                        </p>
+                        <p class="author">
+                            Author
+                        </p>
+                    </div>
+
+                    <div class="set">
+                        <p class="title">
+                            Some title
+                        </p>
+                        <p class="sub-title">
+                            Some sub title
+                        </p>
+                        <p class="author">
+                            Author
+                        </p>
+                    </div>
+
+                    <div class="set">
+                        <p class="title">
+                            Some title
+                        </p>
+                        <p class="sub-title">
+                            Some sub title
+                        </p>
+                        <p class="author">
+                            Author
+                        </p>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </body>
 </html>

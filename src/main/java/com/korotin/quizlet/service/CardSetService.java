@@ -1,6 +1,7 @@
 package com.korotin.quizlet.service;
 
 import com.korotin.quizlet.domain.CardSet;
+import com.korotin.quizlet.domain.security.User;
 import com.korotin.quizlet.exception.SetNotFoundException;
 import com.korotin.quizlet.repository.CardSetRepository;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,7 @@ public class CardSetService {
                 .collect(Collectors.toList());
     }
 
-    public boolean userHaveRightsToModify(UUID setId, String username) throws SetNotFoundException {
+    public boolean userHaveRightsToModify(UUID setId, User user) throws SetNotFoundException {
         Optional<CardSet> cardSet = repository.findById(setId);
 
         if (cardSet.isEmpty())
@@ -41,7 +42,7 @@ public class CardSetService {
 
         CardSet set = cardSet.get();
 
-        return set.getOwner().getUsername().equals(username) ||
-                set.getEditors().stream().anyMatch(u -> u.getUsername().equals(username));
+        return  set.getOwner().equals(user) ||
+                set.getEditors().contains(user);
     }
 }

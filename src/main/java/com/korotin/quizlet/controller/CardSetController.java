@@ -80,6 +80,9 @@ public class CardSetController {
             return "redirect:/home";
         }
 
+        boolean allowedToModify = cardSetService.userHaveRightsToModify(id, getCurrentUser());
+
+        model.addAttribute("userIsEditor", allowedToModify);
         model.addAttribute("set", cardSetOptional.get());
         return "viewSet";
     }

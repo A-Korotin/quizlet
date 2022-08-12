@@ -13,6 +13,7 @@
     font-family: 'Roboto', Arial, sans-serif;
     column-gap: 70px;
     border-bottom: 1px solid rgb(40, 46, 62);
+    z-index: 1000;
 }
 
 .left-section,

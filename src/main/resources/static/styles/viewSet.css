@@ -1,0 +1,111 @@
+/* outline current page */
+
+#search-button {
+    border-bottom: 5px solid cornflowerblue;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+main {
+    color: #FFFFFF;
+    font-family: 'Roboto', Arial, sans-serif;
+    padding-top: 20px;
+}
+.page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.set-info {
+    background-color: rgb(40, 46, 62);
+    width: 70%;
+    border-radius: 20px;
+    padding: 20px 0;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 50px;
+}
+
+.header-row .title {
+    font-size: 50px;
+}
+
+.header-row .edit-button {
+    background-color: transparent;
+    border: none;
+}
+
+.header-row .edit-button:hover {
+    cursor: pointer;
+}
+
+.edit-icon {
+    filter: invert();
+    width: 30px;
+}
+
+
+.set-info .body {
+    margin-top: 20px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.set-description {
+    font-size: 25px;
+}
+
+.access-modifier {
+    font-size: 25px;
+}
+
+.owner-section {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+}
+
+.owner-section .title {
+    font-size: 25px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.owner-section .owner-name {
+    font-size: 25px;
+    color: #939bb4;
+}
+
+.card-section {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-content: flex-start;
+    width: 70%;
+    margin-bottom: 50px;
+}
+
+.card-section .title {
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+.card-row {
+    display: flex;
+    column-gap: 20px;
+}
+
+.card-row .term, .definition {
+    background-color: #2e3856;
+    flex: 1;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+}

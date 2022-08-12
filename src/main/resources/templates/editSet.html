@@ -34,7 +34,9 @@
         <div>
             <input type="submit" value="Edit set">
         </div>
-
+    </form>
+    <form method="#" th:action="@{/sets/{id}(id = ${set.id})}" th:method="delete">
+        <input type="submit" value="DELETE">
     </form>
 </body>
 </html>
