@@ -1,4 +1,4 @@
-package com.korotin.quizlet.domain;
+package com.korotin.quizlet.domain.security;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

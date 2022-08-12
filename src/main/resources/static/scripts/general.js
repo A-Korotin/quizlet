@@ -1,3 +1,3 @@
 function redirect(endpoint) {
-    document.location.replace(endpoint);
+    document.location.href = endpoint;
 }

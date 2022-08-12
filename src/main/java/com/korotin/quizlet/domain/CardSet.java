@@ -1,5 +1,6 @@
 package com.korotin.quizlet.domain;
 
+import com.korotin.quizlet.domain.security.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

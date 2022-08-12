@@ -1,7 +1,7 @@
 package com.korotin.quizlet.controller;
 
 import com.korotin.quizlet.domain.CardSet;
-import com.korotin.quizlet.domain.User;
+import com.korotin.quizlet.domain.security.User;
 import com.korotin.quizlet.repository.CardSetRepository;
 import com.korotin.quizlet.service.CardSetService;
 import com.korotin.quizlet.service.UserService;

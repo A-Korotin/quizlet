@@ -99,9 +99,11 @@ body {
 }
 
 .submit-button:hover {
+    cursor: pointer;
     background-color: #89a5ff;
 }
 
 .back-button:hover {
+    cursor: pointer;
     background-color: #ffac9d;
 }

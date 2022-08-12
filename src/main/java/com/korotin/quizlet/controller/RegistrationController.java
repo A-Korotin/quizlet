@@ -1,6 +1,6 @@
 package com.korotin.quizlet.controller;
 
-import com.korotin.quizlet.domain.User;
+import com.korotin.quizlet.domain.security.User;
 import com.korotin.quizlet.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;

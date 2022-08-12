@@ -1,7 +1,7 @@
 package com.korotin.quizlet.service;
 
-import com.korotin.quizlet.domain.Role;
-import com.korotin.quizlet.domain.User;
+import com.korotin.quizlet.domain.security.Role;
+import com.korotin.quizlet.domain.security.User;
 import com.korotin.quizlet.repository.RoleRepository;
 import com.korotin.quizlet.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

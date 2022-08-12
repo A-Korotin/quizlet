@@ -8,10 +8,10 @@ function search(keyEvent) {
     let searchText = document.getElementById("search-bar").value.trim();
 
     if (searchText.length === 0) {
-        document.location.replace("/sets");
+        redirect("/sets");
     }
 
-    document.location.replace("/sets?filter=" + searchText);
+    redirect("/sets?filter=" + searchText);
 }
 
 function setupHeaderSearch() {

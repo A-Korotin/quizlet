@@ -27,7 +27,7 @@
 }
 
 .set {
-    background-color: rgb(40, 46, 62);
+    background-color: #2e3856;
     padding: 10px 20px;
     border-radius: 15px;
     transition: opacity 0.2s;
