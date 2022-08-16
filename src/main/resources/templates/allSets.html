@@ -21,20 +21,33 @@
     <body onload="setupHeaderSearch(); fillCurrentSearch();">
         <header class="header">
             <nav class="left-section">
-                <div class="icon">
-                    ICON
-                </div>
+                <img class="icon"
+                     th:src="@{/imgs/QuizletLogo.png}"
+                     src="/static/imgs/QuizletLogo.png"
+                     alt="ICON"/>
                 <div class="header-button-container">
                     <button id="home-button"
                             onclick="redirect('/home')">
                         Home
                     </button>
                 </div>
-                <div class="header-button-container">
+                <div class="header-button-container"
+                     id="create-container">
                     <button id="create-button"
-                            onclick="redirect('/sets/create')">
+                            onclick="createRedirect()">
                         Create
                     </button>
+                    <div class="create-hint">
+                        <div class="label">
+                            Number of cards you want to add
+                        </div>
+                        <input id="number-input"
+                               type="number"
+                               min="0"
+                               step="1"
+                               value="3"
+                               placeholder="Number of cards"/>
+                    </div>
                 </div>
                 <div class="header-button-container">
                     <button id="search-button"

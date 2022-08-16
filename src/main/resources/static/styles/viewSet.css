@@ -64,6 +64,7 @@ main {
 
 .access-modifier {
     font-size: 25px;
+    text-decoration: underline;
 }
 
 .owner-section {

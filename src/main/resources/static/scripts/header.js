@@ -28,3 +28,13 @@ function fillCurrentSearch() {
 
     document.getElementById("search-bar").value = filter;
 }
+
+function createRedirect() {
+    let numberInput = document.getElementById("number-input");
+
+    let number = numberInput.value === "" ? 0 : parseInt(numberInput.value);
+
+    number = Math.max(0, number);
+
+    redirect("/sets/create?numberOfCards=" + number);
+}

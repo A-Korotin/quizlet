@@ -30,6 +30,10 @@
     min-width: 300px;
 }
 
+.left-section .icon {
+    width: 100px;
+}
+
 .right-section {
     flex: 1;
     justify-content: flex-end;
@@ -114,3 +118,38 @@
     text-align: center;
 }
 
+
+#create-container {
+    position: relative;
+}
+
+#create-container:hover .create-hint {
+    bottom: -88px;
+    opacity: 1;
+}
+
+.create-hint {
+    position: absolute;
+    bottom: -93px;
+    background-color: rgb(40, 46, 62);
+    padding: 10px 10px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+#number-input {
+    background-color: rgb(46, 56, 86);
+    border: none;
+    color: #FFFFFF;
+    margin-top: 2px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+#number-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Roboto', Arial, sans-serif;
+
+}
