@@ -84,11 +84,11 @@
         </header>
 
         <main class="page-content">
-            <form action="#"
+            <form method="#"
                   class="form"
-                  th:action="@{/sets/{id}/edit(id = ${set.id})}"
-                  th:object="${set}"
-                  method="post">
+                  th:action="@{/sets/{id}(id = ${set.id})}"
+                  th:method="PUT"
+                  th:object="${set}">
                 <section class="info-section">
                     <div class="row">
                         <div class="label">

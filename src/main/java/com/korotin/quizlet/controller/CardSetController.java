@@ -126,7 +126,7 @@ public class CardSetController {
         return "editSet";
     }
 
-    @PostMapping("/{id}/edit")
+    @PutMapping("/{id}")
     public String confirmEdit(@PathVariable UUID id,
                               @ModelAttribute CardSet editedCardSet) {
 
