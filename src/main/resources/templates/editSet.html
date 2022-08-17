@@ -1,42 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit card set</title>
-</head>
-<body>
-    <form action="#" th:action="@{/sets/{id}/edit(id = ${set.id})}" th:object="${set}" method="post">
-        <div><label>Set name: <input type="text" th:field="*{title}"></label></div>
-        <div><label>Set description (optional) <input type="text" th:field="*{description}"></label></div>
-        <div><label>Allow others to use this set? <input type="checkbox" th:field="*{isPublic}" th:checked="${isPublic}"></label></div>
-        <br>
-        <div class="card-form" th:each="card, iter : ${set.cards}" >
-            <div class="text-areas-container">
-                <textarea class="term-area"
-                          th:field="*{cards[__${iter.index}__].term}"
-                          th:text="#{term}">Term</textarea>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Edit set</title>
+        <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
+        <link href="/static/styles/header.css" th:href="@{/styles/header.css}" rel="stylesheet"/>
+        <link href="/static/styles/createSet.css" th:href="@{/styles/createSet.css}" rel="stylesheet"/>
+        <link href="/static/styles/editSet.css" th:href="@{/styles/editSet.css}" rel="stylesheet"/>
 
-                <textarea class="definition-area"
-                          th:field="*{cards[__${iter.index}__].definition}"
-                          th:text="#{definition}">Definition</textarea>
+        <script type="text/javascript"
+                src="/static/scripts/header.js"
+                th:src="@{/scripts/header.js}"></script>
+        <script type="text/javascript"
+                src="/static/scripts/general.js"
+                th:src="@{/scripts/general.js}"></script>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <header class="header">
+            <nav class="left-section">
+                <img class="icon"
+                     th:src="@{/imgs/QuizletLogo.png}"
+                     src="/static/imgs/QuizletLogo.png"
+                     alt="ICON"/>
+                <div class="header-button-container">
+                    <button id="home-button"
+                            onclick="redirect('/home')">
+                        Home
+                    </button>
+                </div>
+                <div class="header-button-container"
+                     id="create-container">
+                    <button id="create-button"
+                            onclick="createRedirect()">
+                        Create
+                    </button>
+                    <div class="create-hint">
+                        <div class="label">
+                            Number of cards you want to add
+                        </div>
+                        <input id="number-input"
+                               type="number"
+                               min="0"
+                               step="1"
+                               value="3"
+                               placeholder="Number of cards"/>
+                    </div>
+                </div>
+                <div class="header-button-container">
+                    <button id="search-button"
+                            onclick="redirect('/sets')">
+                        Search
+                    </button>
+                </div>
+            </nav>
+            <div class="right-section">
+                <input class="search-bar"
+                       type="text"
+                       id="search-bar"
+                       placeholder="Search"/>
+
+                <div class="login-button-container" sec:authorize="isAnonymous()">
+                    <button class="login-button"
+                            onclick="redirect('/login')">
+                        Login
+                    </button>
+                </div>
+                <div class="username-text"
+                     sec:authorize="isAuthenticated()"
+                     th:text="${#authentication.getName()}">
+                    #auth.getUsername()
+                </div>
+                <div class="logout-button-container">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                        <input class="logout-button" type="submit" value="Logout">
+                    </form>
+                </div>
             </div>
-        </div>
+        </header>
 
-        <div class="card-form" th:each="i : ${#numbers.sequence(#lists.size(set.cards), #lists.size(set.cards) + nCards - 1)}">
-            <div class="text-areas-container">
-                <textarea class="term-area"
-                          th:field="*{cards[__${i}__].term}">Term</textarea>
+        <main class="page-content">
+            <form action="#"
+                  class="form"
+                  th:action="@{/sets/{id}/edit(id = ${set.id})}"
+                  th:object="${set}"
+                  method="post">
+                <section class="info-section">
+                    <div class="row">
+                        <div class="label">
+                            Set name:
+                        </div>
+                        <input type="text"
+                               class="input-field"
+                               th:field="*{title}"
+                               placeholder="Name"/>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            Set description (optional):
+                        </div>
+                        <textarea class="input-area"
+                                  id="description-area"
+                                  th:field="*{description}"
+                                  placeholder="Description"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            Allow others to see this set?
+                        </div>
+                        <input class="checkbox"
+                               type="checkbox"
+                               th:field="*{isPublic}"/>
+                    </div>
+                </section>
+                <section class="card-section">
+                    <div class="label">
+                        Cards:
+                    </div>
+                    <div class="card-row" th:each="card, iter : ${set.cards}">
+                            <textarea class="input-area"
+                                      placeholder="Term"
+                                      th:field="*{cards[__${iter.index}__].term}"
+                                      th:text="#{term}"></textarea>
 
-                <textarea class="definition-area"
-                          th:field="*{cards[__${i}__].definition}">Definition</textarea>
-            </div>
-        </div>
-        <div>
-            <input type="submit" value="Edit set">
-        </div>
-    </form>
-    <form method="#" th:action="@{/sets/{id}(id = ${set.id})}" th:method="delete">
-        <input type="submit" value="DELETE">
-    </form>
-</body>
+                        <textarea class="input-area"
+                                  placeholder="Definition"
+                                  th:field="*{cards[__${iter.index}__].definition}"
+                                  th:text="#{definition}"></textarea>
+                    </div>
+
+                    <div class="card-row"
+                         th:each="i : ${#numbers.sequence(#lists.size(set.cards), #lists.size(set.cards) + nCards - 1)}">
+                        <textarea class="input-area"
+                                  placeholder="Term"
+                                  th:field="*{cards[__${i}__].term}"></textarea>
+
+                        <textarea class="input-area"
+                                  placeholder="Definition"
+                                  th:field="*{cards[__${i}__].definition}"></textarea>
+                    </div>
+                    <div class="submit-section">
+                        <input class="submit-button"
+                               type="submit"
+                               value="Edit set">
+                    </div>
+                </section>
+            </form>
+            <section class="submit-section">
+                <form class="delete-from"
+                      method="#"
+                      th:action="@{/sets/{id}(id = ${set.id})}"
+                      th:method="delete">
+                    <input class="submit-button"
+                           id="delete-button"
+                           type="submit"
+                           value="Delete set">
+                </form>
+            </section>
+
+
+
+<!--                <div class="card-form" th:each="card, iter : ${set.cards}" >-->
+<!--                    <div class="text-areas-container">-->
+<!--                        <textarea class="term-area"-->
+<!--                                  th:field="*{cards[__${iter.index}__].term}"-->
+<!--                                  th:text="#{term}">Term</textarea>-->
+
+<!--                        <textarea class="definition-area"-->
+<!--                                  th:field="*{cards[__${iter.index}__].definition}"-->
+<!--                                  th:text="#{definition}">Definition</textarea>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="card-form" th:each="i : ${#numbers.sequence(#lists.size(set.cards), #lists.size(set.cards) + nCards - 1)}">-->
+<!--                    <div class="text-areas-container">-->
+<!--                        <textarea class="term-area"-->
+<!--                                  th:field="*{cards[__${i}__].term}">Term</textarea>-->
+
+<!--                        <textarea class="definition-area"-->
+<!--                                  th:field="*{cards[__${i}__].definition}">Definition</textarea>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <input type="submit" value="Edit set">-->
+<!--                </div>-->
+<!--            </form>-->
+<!--            <form method="#" th:action="@{/sets/{id}(id = ${set.id})}" th:method="delete">-->
+<!--                <input type="submit" value="DELETE">-->
+<!--            </form>-->
+        </main>
+    </body>
 </html>

@@ -1,0 +1,13 @@
+.submit-section {
+    display: flex;
+    column-gap: 20px;
+    justify-content: center;
+}
+
+#delete-button {
+    background-color: lightcoral;
+}
+
+#delete-button:hover {
+    background-color: #ffac9d;
+}

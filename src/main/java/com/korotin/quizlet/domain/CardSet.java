@@ -29,7 +29,7 @@ public class CardSet {
     @JoinColumn(name = "set_id")
     private List<Card> cards;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "owner_id")
     private User owner;
 

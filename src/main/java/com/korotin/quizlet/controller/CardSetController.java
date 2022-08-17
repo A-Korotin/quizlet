@@ -88,7 +88,6 @@ public class CardSetController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseBody
     public String deleteSet(@PathVariable UUID id) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -100,12 +99,12 @@ public class CardSetController {
 
         if (!cardSetRepository.existsById(id)) {
             // todo not found page
-            return "redirect:/sets";
+            return "redirect:/home";
         }
 
         cardSetRepository.deleteById(id);
 
-        return "redirect:/sets";
+        return "redirect:/home";
     }
 
     @GetMapping("/{id}/edit")
