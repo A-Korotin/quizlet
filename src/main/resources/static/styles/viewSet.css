@@ -44,6 +44,43 @@ main {
     cursor: pointer;
 }
 
+.edit-icon-container {
+    position: relative;
+}
+
+.edit-icon-container:hover .hint {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.hint {
+    position: absolute;
+    background-color: #2e3856;
+    padding: 10px 20px;
+    border-radius: 10px;
+    bottom: -90px;
+    left: -50px;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+}
+
+#edit-number-input {
+    background-color: rgb(40, 46, 62);
+    border: none;
+    color: #FFFFFF;
+    margin-top: 2px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+#edit-number-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Roboto', Arial, sans-serif;
+
+}
+
 .edit-icon {
     filter: invert();
     width: 30px;

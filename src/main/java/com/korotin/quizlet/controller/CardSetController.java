@@ -110,7 +110,7 @@ public class CardSetController {
     @GetMapping("/{id}/edit")
     public String editSet(Model model,
                           @PathVariable UUID id,
-                          @RequestParam(defaultValue = "3") @Min(0) int nCards) {
+                          @RequestParam(defaultValue = "3") @Min(0) int numberOfCards) {
 
 
         Optional<CardSet> cardSet = cardSetRepository.findById(id);
@@ -121,7 +121,7 @@ public class CardSetController {
         }
 
         model.addAttribute("set", cardSet.get());
-        model.addAttribute("nCards", nCards);
+        model.addAttribute("nCards", numberOfCards);
 
         return "editSet";
     }

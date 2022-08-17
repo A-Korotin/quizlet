@@ -1,3 +1,17 @@
+/* outline current page */
+
+#search-button {
+    border-bottom: 5px solid cornflowerblue;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+#create-button {
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+}
+
 .submit-section {
     display: flex;
     column-gap: 20px;
