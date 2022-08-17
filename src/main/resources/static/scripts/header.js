@@ -1,14 +1,26 @@
 const ENTER_KEY_CODE = 13;
+const MAX_ASCII_CODE = 127
+
+function containsNonASCII(str) {
+    return [...str].some(char => char.charCodeAt(0) > MAX_ASCII_CODE);
+}
 
 function search(keyEvent) {
     if (keyEvent.keyCode !== ENTER_KEY_CODE) {
         return;
     }
 
-    let searchText = document.getElementById("search-bar").value.trim();
+    let searchBar = document.getElementById("search-bar");
+
+    let searchText = searchBar.value.trim();
 
     if (searchText.length === 0) {
         redirect("/sets");
+    }
+
+    if (containsNonASCII(searchText)) {
+        searchBar.value = "";
+        return;
     }
 
     redirect("/sets?filter=" + searchText);

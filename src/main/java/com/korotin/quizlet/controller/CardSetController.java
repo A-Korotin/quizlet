@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,10 @@ public class CardSetController {
 
     @GetMapping("/create")
     public String create(Model model,
-                         @RequestParam(defaultValue = "3") @Min(0) int numberOfCards) {
+                         @RequestParam(defaultValue = "3") int numberOfCards) {
+
+        numberOfCards = setValueInValidRange(numberOfCards);
+
         model.addAttribute("set", new CardSet());
         model.addAttribute("nCards", numberOfCards);
         return "createSet";
@@ -110,8 +114,9 @@ public class CardSetController {
     @GetMapping("/{id}/edit")
     public String editSet(Model model,
                           @PathVariable UUID id,
-                          @RequestParam(defaultValue = "3") @Min(0) int numberOfCards) {
+                          @RequestParam(defaultValue = "3") int numberOfCards) {
 
+        numberOfCards = setValueInValidRange(numberOfCards);
 
         Optional<CardSet> cardSet = cardSetRepository.findById(id);
 
@@ -141,6 +146,12 @@ public class CardSetController {
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (User) userService.loadUserByUsername(authentication.getName());
+    }
+
+    private int setValueInValidRange(int value) {
+        value = Math.max(1, value);
+        value = Math.min(100, value);
+        return value; // if 1 <= number <= 100 return number
     }
 
 }
