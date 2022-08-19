@@ -31,7 +31,10 @@ public class TrainController {
             return "redirect:/home";
         }
 
-        model.addAttribute("cards", cardSetOptional.get().getCards());
+        CardSet set = cardSetOptional.get();
+
+        model.addAttribute("cards", set.getCards());
+        model.addAttribute("name", set.getTitle());
         return "train";
     }
 }

@@ -1,0 +1,71 @@
+/* outline current page*/
+
+#search-button {
+    border-bottom: 5px solid cornflowerblue;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+html, body {
+    height: 90%;
+}
+
+.page-content {
+    font-family: 'Roboto', Arial, sans-serif;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heading {
+    font-size: 50px;
+}
+
+.card-count {
+    margin-top: 10px;
+    display: flex;
+    font-size: 30px;
+    margin-bottom: 40px;
+}
+
+
+.card-section {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+#still-learning-button,
+#know-button {
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    color: #FFFFFF;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 20px;
+    transition: background-color 0.8s;
+}
+
+#still-learning-button:hover {
+    background-color: lightcoral;
+}
+
+#know-button:hover {
+    background-color: lightgreen;
+}
+
+#area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 4;
+    background-color: #2e3856;
+    font-size: 30px;
+}

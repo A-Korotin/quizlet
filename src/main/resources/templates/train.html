@@ -1,71 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Training</title>
-</head>
-<body>
-    <h1>We're training now! </h1>
-    <h4>Cards learnt: <span id="current-card-count">0</span>/<span id="total-card-count"></span></h4>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Training</title>
+        <link href="/static/styles/header.css" th:href="@{/styles/header.css}" rel="stylesheet"/>
+        <link href="/static/styles/train.css" th:href="@{/styles/train.css}" rel="stylesheet"/>
+        <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
+        <script type="text/javascript"
+                src="/static/scripts/header.js"
+                th:src="@{/scripts/header.js}"></script>
+        <script type="text/javascript"
+                src="/static/scripts/general.js"
+                th:src="@{/scripts/general.js}"></script>
 
-    <button id="still-learning-button" onclick="onStillLearningButtonPressed()">Still learning</button>
-    <div id="area" onclick="swapCard()" style="background-color: lightblue"></div>
-    <button id="know-button" onclick="onKnowButtonPressed()">Know</button>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
 
-    <script th:inline="javascript">
-        let cards = [[${cards}]];
-        let totalCardsCount = cards.length;
-        document.getElementById("total-card-count").innerText = totalCardsCount.toString();
+    <body onload="setupHeaderSearch();">
+        <header class="header">
+            <nav class="left-section">
+                <img class="icon"
+                     th:src="@{/imgs/QuizletLogo.png}"
+                     src="/static/imgs/QuizletLogo.png"
+                     alt="ICON"/>
+                <div class="header-button-container">
+                    <button id="home-button"
+                            onclick="redirect('/home')">
+                        Home
+                    </button>
+                </div>
+                <div class="header-button-container"
+                     id="create-container">
+                    <button id="create-button"
+                            onclick="createRedirect()">
+                        Create
+                    </button>
+                    <div class="create-hint">
+                        <div class="label">
+                            Number of cards you want to add
+                        </div>
+                        <input id="number-input"
+                               type="number"
+                               min="0"
+                               step="1"
+                               value="3"
+                               placeholder="Number of cards"/>
+                    </div>
+                </div>
+                <div class="header-button-container">
+                    <button id="search-button"
+                            onclick="redirect('/sets')">
+                        Search
+                    </button>
+                </div>
+            </nav>
+            <div class="right-section">
+                <input class="search-bar"
+                       type="text"
+                       id="search-bar"
+                       placeholder="Search"/>
 
-        let currentCardIndex = -1;
-        let knownCards = 0;
+                <div class="login-button-container" sec:authorize="isAnonymous()">
+                    <button class="login-button"
+                            onclick="redirect('/login')">
+                        Login
+                    </button>
+                </div>
+                <div class="username-text"
+                     sec:authorize="isAuthenticated()"
+                     th:text="${#authentication.getName()}">
+                    #auth.getUsername()
+                </div>
+                <div class="logout-button-container">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                        <input class="logout-button" type="submit" value="Logout">
+                    </form>
+                </div>
+            </div>
+        </header>
 
-        let cardArea = document.getElementById("area");
-        let currentCardCount = document.getElementById("current-card-count");
-        let knowButton = document.getElementById("know-button");
-        let stillLearningButton = document.getElementById("still-learning-button");
-        let isTerm = true;
+        <main class="page-content">
+            <div class="info">
+                <div class="heading" th:text="'Training: ' + ${name}">
+                    Training ${name}
+                </div>
+                <div class="card-count">
+                    <div class="label">
+                        Cards learnt:
+                    </div>
 
-        function updateCard() {
-            if (anyCardsLeft()) {
-                cardArea.innerText = cards[++currentCardIndex].term;
-                isTerm = true;
-            } else {
+                    <div id="current-card-count">
+                        0
+                    </div>
+                    <div id="separator">
+                        /
+                    </div>
+                    <div id="total-card-count">
+                        10
+                    </div>
 
-                knowButton.disabled = true;
-                stillLearningButton.disabled = true;
-                alert("We're done! Good job.")
+                </div>
+            </div>
+
+            <section class="card-section">
+                <button id="still-learning-button" onclick="onStillLearningButtonPressed()">
+                    Still learning
+                </button>
+
+                <div id="area" onclick="swapCard()">
+                    Card area
+                </div>
+
+                <button id="know-button" onclick="onKnowButtonPressed()">
+                    Know
+                </button>
+            </section>
+        </main>
+
+        <script th:inline="javascript">
+            let cards = [[${cards}]];
+
+            let totalCardsCount = cards.length;
+            document.getElementById("total-card-count").innerText = totalCardsCount.toString();
+
+            let currentCardIndex = -1;
+            let knownCards = 0;
+
+            let cardArea = document.getElementById("area");
+            let currentCardCount = document.getElementById("current-card-count");
+            let knowButton = document.getElementById("know-button");
+            let stillLearningButton = document.getElementById("still-learning-button");
+            let isTerm = true;
+
+            function updateCard() {
+                if (anyCardsLeft()) {
+                    cardArea.innerText = cards[++currentCardIndex].term;
+                    isTerm = true;
+                } else {
+
+                    knowButton.disabled = true;
+                    stillLearningButton.disabled = true;
+                    alert("We're done! Good job.")
+                }
+
             }
 
-        }
+            function swapCard() {
 
-        function swapCard() {
-
-            if (isTerm) { //swap to definition
-                cardArea.innerText = cards[currentCardIndex].definition;
-                isTerm = false;
-            } else { //swap to term
-                cardArea.innerText = cards[currentCardIndex].term;
-                isTerm = true;
+                if (isTerm) { //swap to definition
+                    cardArea.innerText = cards[currentCardIndex].definition;
+                    isTerm = false;
+                } else { //swap to term
+                    cardArea.innerText = cards[currentCardIndex].term;
+                    isTerm = true;
+                }
             }
-        }
 
-        function onKnowButtonPressed() {
+            function onKnowButtonPressed() {
 
-            currentCardCount.innerText = (++knownCards).toString();
+                currentCardCount.innerText = (++knownCards).toString();
+                updateCard();
+            }
+
+            function onStillLearningButtonPressed() {
+                updateCard();
+            }
+
+            function anyCardsLeft() {
+                return currentCardIndex + 1 < totalCardsCount;
+            }
+
             updateCard();
-        }
-
-        function onStillLearningButtonPressed() {
-            updateCard();
-        }
-
-        function anyCardsLeft() {
-            return currentCardIndex + 1 < totalCardsCount;
-        }
-
-        updateCard();
-
-    </script>
-</body>
+        </script>
+    </body>
 </html>
