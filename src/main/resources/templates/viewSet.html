@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>View set</title>
+
+        <link href="/static/styles/header.css" th:href="@{/styles/header.css}" rel="stylesheet"/>
+        <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
+        <link href="/static/styles/viewSet.css" th:href="@{/styles/viewSet.css}" rel="stylesheet"/>
+        <script type="text/javascript"
+                src="/static/scripts/header.js"
+                th:src="@{/scripts/header.js}"></script>
+        <script type="text/javascript"
+                src="/static/scripts/general.js"
+                th:src="@{/scripts/general.js}"></script>
+        <script type="text/javascript"
+                src="/static/scripts/viewSet.js"
+                th:src="@{/scripts/viewSet.js}"></script>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header class="header">
+            <nav class="left-section">
+                <img class="icon"
+                     th:src="@{/imgs/QuizletLogo.png}"
+                     src="/static/imgs/QuizletLogo.png"
+                     alt="ICON"/>
+                <div class="header-button-container">
+                    <button id="home-button"
+                            onclick="redirect('/home')">
+                        Home
+                    </button>
+                </div>
+                <div class="header-button-container"
+                     id="create-container">
+                    <button id="create-button"
+                            onclick="createRedirect()">
+                        Create
+                    </button>
+                    <div class="create-hint">
+                        <div class="label">
+                            Number of cards you want to add
+                        </div>
+                        <input id="number-input"
+                               type="number"
+                               min="0"
+                               step="1"
+                               value="3"
+                               placeholder="Number of cards"/>
+                    </div>
+                </div>
+                <div class="header-button-container">
+                    <button id="search-button"
+                            onclick="redirect('/sets')">
+                        Search
+                    </button>
+                </div>
+            </nav>
+            <div class="right-section">
+                <input class="search-bar"
+                       type="text"
+                       id="search-bar"
+                       placeholder="Search"/>
+
+                <div class="login-button-container" sec:authorize="isAnonymous()">
+                    <button class="login-button"
+                            onclick="redirect('/login')">
+                        Login
+                    </button>
+                </div>
+                <div class="username-text"
+                     sec:authorize="isAuthenticated()"
+                     th:text="${#authentication.getName()}">
+                    #auth.getUsername()
+                </div>
+                <div class="logout-button-container">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                        <input class="logout-button" type="submit" value="Logout">
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <main class="page-content" th:object="${set}">
+            <section class="set-info">
+                <div class="header-row">
+                    <div class="title" th:text="*{title}">
+                        Title
+                    </div>
+                    <div class="edit-icon-container">
+                        <button class="edit-button"
+                                th:if="${userIsEditor}"
+                                onclick="redirectEdit()">
+                            <img class="edit-icon"
+                                 th:src="@{/imgs/edit-icon.svg}"
+                                 src="/static/imgs/edit-icon.svg"
+                                 alt="edit icon">
+                        </button>
+                        <div class="hint">
+                            <div class="label">
+                                Number of cards you want to add
+                            </div>
+                            <input id="edit-number-input"
+                                   type="number"
+                                   min="0"
+                                   step="1"
+                                   value="3"
+                                   placeholder="Number of cards"/>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="set-description" th:text="*{description}">
+                        description
+                    </div>
+                    <div class="access-modifier"
+                         th:text="*{isPublic} ? 'Public set': 'Private set'">
+                        Access modifier
+                    </div>
+                    <div class="owner-section">
+                        <p class="title">
+                            Owner:
+                        </p>
+                        <div class="owner-name" th:text="${set.owner.username}">
+                            ${owner.username}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card-section">
+                <div class="title">
+                    Cards:
+                </div>
+                <div class="card-container" th:each="card: ${set.cards}">
+                    <div class="card-row">
+                        <div class="term"
+                             th:text="${card.term}">
+                            Term
+                        </div>
+                        <div class="definition"
+                             th:text="${card.definition}">
+                            Definition
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

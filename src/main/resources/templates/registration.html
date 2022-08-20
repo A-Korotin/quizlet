@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet"
+              href="/static/styles/registration.css"
+              th:href="@{/styles/registration.css}">
+        <script type="text/javascript"
+                src="/static/scripts/general.js"
+                th:src="@{/scripts/general.js}"></script>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <title>Sign up</title>
+    </head>
+    <body>
+        <main class="main-section">
+            <div class="title">
+                Sign up
+            </div>
+            <section class="error-section"
+                 th:if="${message}"
+                 th:text="${message}">
+                ERROR MESSAGE PLACEHOLDER
+            </section>
+
+            <form th:action="@{/registration}"
+                  th:object="${user}"
+                  method="post">
+                <section class="form-section">
+                    <div class="input-section">
+                        <p class="label">
+                            Login*
+                        </p>
+                        <div class="input-row">
+                            <input class="input-field"
+                                   type="text"
+                                   th:field="*{username}"
+                                   placeholder="Min. 4 characters"/>
+                            <p class="error-text"
+                               th:if="${#fields.hasErrors('username')}"
+                               th:errors="*{username}">USERNAME ERROR TEXT PLACEHOLDER
+                            </p>
+                        </div>
+                    </div>
+                    <div class="input-section">
+                        <p class="label">
+                            Password*
+                        </p>
+                        <div class="input-row">
+                            <input class="input-field"
+                                   type="password"
+                                   th:field="*{password}" placeholder="Min. 6 characters"/>
+                            <p class="error-text"
+                               th:if="${#fields.hasErrors('password')}"
+                               th:errors="*{password}">PASSWORD ERROR TEXT PLACEHOLDER
+                            </p>
+                        </div>
+                    </div>
+                    <div class="input-section">
+                        <p class="label">
+                            Repeat password*
+                        </p>
+                        <div class="input-row" id="repeat-password-row">
+                            <input class="input-field"
+                                   type="password"
+                                   th:field="*{passwordConfirm}"
+                                   placeholder="Min. 6 characters"/>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="back-button"
+                                type="button"
+                                onclick="redirect('/login')">
+                            Back to login
+                        </button>
+                        <input class="submit-button"
+                               type="submit"
+                               value="Sign up"/>
+                    </div>
+                </section>
+            </form>
+        </main>
+    </body>
+</html>
