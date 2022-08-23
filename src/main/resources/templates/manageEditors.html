@@ -1,28 +1,23 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>View set</title>
-
+        <title>Manage editors</title>
         <link href="/static/styles/header.css" th:href="@{/styles/header.css}" rel="stylesheet"/>
         <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
-        <link href="/static/styles/viewSet.css" th:href="@{/styles/viewSet.css}" rel="stylesheet"/>
+        <link href="/static/styles/manageEditors.css" th:href="@{/styles/manageEditors.css}" rel="stylesheet"/>
         <script type="text/javascript"
                 src="/static/scripts/header.js"
                 th:src="@{/scripts/header.js}"></script>
         <script type="text/javascript"
                 src="/static/scripts/general.js"
                 th:src="@{/scripts/general.js}"></script>
-        <script type="text/javascript"
-                src="/static/scripts/viewSet.js"
-                th:src="@{/scripts/viewSet.js}"></script>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     </head>
-    <body>
+    <body onload="setupHeaderSearch()">
         <header class="header">
             <nav class="left-section">
                 <img class="icon"
@@ -85,71 +80,35 @@
             </div>
         </header>
 
-        <main class="page-content" th:object="${set}">
+        <main class="page-content">
             <section class="set-info">
-                <div class="header-row">
-                    <div class="title" th:text="*{title}">
-                        Title
-                    </div>
-                    <div class="edit-icon-container">
-                        <button class="edit-button"
-                                th:if="${userIsEditor}"
-                                onclick="redirectEdit()">
-                            <img class="edit-icon"
-                                 th:src="@{/imgs/edit-icon.svg}"
-                                 src="/static/imgs/edit-icon.svg"
-                                 alt="edit icon">
-                        </button>
-                        <div class="hint">
-                            <div class="label">
-                                Number of cards you want to add
-                            </div>
-                            <input id="edit-number-input"
-                                   type="number"
-                                   min="0"
-                                   step="1"
-                                   value="3"
-                                   placeholder="Number of cards"/>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="body">
-                    <div class="set-description" th:text="*{description}">
-                        description
-                    </div>
-                    <div class="access-modifier"
-                         th:text="*{isPublic} ? 'Public set': 'Private set'">
-                        Access modifier
-                    </div>
-                    <div class="owner-section">
-                        <p class="title">
-                            Owner:
-                        </p>
-                        <div class="owner-name" th:text="${set.owner.username}">
-                            ${owner.username}
-                        </div>
-                    </div>
-                </div>
             </section>
+            <section class="editors-section">
+                <form class="editors-container"
+                      method="#"
+                      th:method="put"
+                      th:action="@{/sets/{id}/editors(id=${set.id})}"
+                      th:object="${set}">
 
-            <section class="card-section">
-                <div class="title">
-                    Cards:
-                </div>
-                <div class="card-container" th:each="card: ${set.cards}">
-                    <div class="card-row">
-                        <div class="term"
-                             th:text="${card.term}">
-                            Term
-                        </div>
-                        <div class="definition"
-                             th:text="${card.definition}">
-                            Definition
-                        </div>
+                    <div class="editor"
+                         th:each="user, iter: ${set.editors}">
+                        <input class="editor-field"
+                               type="text"
+                               th:field="*{editors[__${iter.index}__].username}"/>
                     </div>
-                </div>
+
+                    <div class="editor"
+                         th:each="i : ${#numbers.sequence(#lists.size(set.editors), #lists.size(set.editors) + 3 - 1)}">
+                        <input class="editor-field"
+                               type="text"
+                               th:field="*{editors[__${i}__].username}"/>
+                    </div>
+
+                    <input type="submit" value="Edit"/>
+                </form>
             </section>
         </main>
+
     </body>
 </html>

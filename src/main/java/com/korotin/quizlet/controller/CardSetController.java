@@ -8,12 +8,12 @@ import com.korotin.quizlet.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -129,6 +129,57 @@ public class CardSetController {
         model.addAttribute("nCards", numberOfCards);
 
         return "editSet";
+    }
+
+    @GetMapping("/{id}/editors")
+    public String manageEditors(Model model,
+                                @PathVariable UUID id) {
+
+        Optional<CardSet> cardSet = cardSetRepository.findById(id);
+
+        if (cardSet.isEmpty()) {
+            // todo not found page
+            return "redirect:/home";
+        }
+
+        CardSet set = cardSet.get();
+        model.addAttribute("set", set);
+
+        return "manageEditors";
+    }
+
+    @PutMapping("/{id}/editors")
+    public String confirmEditors(@PathVariable UUID id,
+                                 @ModelAttribute CardSet editedSet) {
+        List<User> editors = editedSet.getEditors()
+                .stream().filter(user -> user.getUsername() != null && !user.getUsername().equals(""))
+                .filter(user -> {
+                    String username = user.getUsername();
+                    try {
+                        User userFromDb = (User) userService.loadUserByUsername(username);
+                        return true;
+                    } catch (UsernameNotFoundException e) {
+                        return false;
+                    }
+                })
+                .map(user -> (User) userService.loadUserByUsername(user.getUsername()))
+                .collect(Collectors.toList());
+
+        System.out.println(editors);
+
+        Optional<CardSet> cardSetOptional = cardSetRepository.findById(id);
+
+        if (cardSetOptional.isEmpty()) {
+            // TODO: 23.08.2022 not found page
+            return "redirect:/home";
+        }
+
+        CardSet set = cardSetOptional.get();
+        set.setEditors(editors);
+        System.out.println(cardSetRepository.save(set));
+
+
+        return "redirect:/home";
     }
 
     @PutMapping("/{id}")

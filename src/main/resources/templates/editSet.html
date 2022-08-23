@@ -116,6 +116,12 @@
                                type="checkbox"
                                th:field="*{isPublic}"/>
                     </div>
+
+                    <div class="row">
+                        <div class="label">
+                            <a th:href="@{/sets/{id}/editors(id=${set.id})}">Manage editors</a>
+                        </div>
+                    </div>
                 </section>
                 <section class="card-section">
                     <div class="label">
