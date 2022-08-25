@@ -20,8 +20,10 @@ main {
 .set-info {
     background-color: rgb(40, 46, 62);
     width: 70%;
+    min-width: 350px;
     border-radius: 20px;
     padding: 20px 0;
+    overflow-wrap: break-word;
 }
 
 .header-row {
@@ -97,6 +99,7 @@ main {
 
 .set-description {
     font-size: 25px;
+    margin-right:10px;
 }
 
 .access-modifier {
@@ -138,6 +141,7 @@ main {
 .card-row {
     display: flex;
     column-gap: 20px;
+    justify-content: space-between;
 }
 
 .card-row .term, .definition {
@@ -146,4 +150,6 @@ main {
     border-radius: 20px;
     padding: 10px 20px;
     font-size: 20px;
+    width: 40%;
+    overflow-wrap: break-word;
 }

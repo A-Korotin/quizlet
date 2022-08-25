@@ -93,10 +93,18 @@
                  th:object="${sets}"
                  th:each="set : ${sets}"
                  th:onclick="redirect([[@{/sets/{id}(id = ${set.id})}]])">
-                <div class="title" th:text="${set.title}">Title</div>
-                <div class="sub-title" th:text="${set.description}">Sub title</div>
-                <div class="cards-amount" th:text="${#lists.size(set.cards) + ' cards'} ">56 cards</div>
-                <div class="author" th:text="${set.owner.username}">Author</div>
+                <div class="title" th:text="${set.title}">
+                    Title
+                </div>
+                <div class="sub-title" th:text="${set.description}">
+                    long long long long long long long long long long long long long long long long long long long long long long long long long long long
+                </div>
+                <div class="cards-amount" th:text="${#lists.size(set.cards) + ' card(s)'} ">
+                    56 cards
+                </div>
+                <div class="author" th:text="${set.owner.username}">
+                    Author
+                </div>
             </div>
         </section>
 

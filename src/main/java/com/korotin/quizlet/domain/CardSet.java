@@ -4,6 +4,7 @@ import com.korotin.quizlet.domain.security.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class CardSet {
     @GeneratedValue
     private UUID id;
 
-    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String title;
 
     @Lob

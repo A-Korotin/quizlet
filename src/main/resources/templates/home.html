@@ -114,8 +114,11 @@
                     <div class="grid">
                         <div class="set" th:each="set: ${ownedSets}"
                              th:onclick="redirect([[@{/sets/{id}(id = ${set.id})}]])">
-                            <p class="title" th:text="${set.title}"></p>
-                            <p class="sub-title" th:text="${set.description}"></p>
+                            <p class="title" th:text="${set.title}">
+                                title
+                            </p>
+                            <p class="sub-title" th:text="${set.description}">
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -127,7 +130,9 @@
 
                     <div class="grid">
                         <div class="set" th:each="set: ${editedSets}">
-                            <p class="title" th:text="*{title}"></p>
+                            <p class="title" th:text="*{title}">
+
+                            </p>
                             <p class="sub-title" th:text="*{description}"></p>
                             <p class="author" th:text="*{owner.username}"></p>
                         </div>

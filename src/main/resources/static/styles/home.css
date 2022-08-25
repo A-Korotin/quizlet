@@ -79,9 +79,13 @@
 }
 
 .set {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background-color: #2e3856;
     border-radius: 10px;
     transition: opacity 0.2s;
+    min-width: 0;
 }
 
 .set:hover {
@@ -93,6 +97,9 @@
     font-family: 'Roboto', Arial, sans-serif;
     margin-left: 10px;
     color: #FFFFFF;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .set .title {
@@ -111,7 +118,7 @@
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid: auto-flow / repeat(3, 1fr) fit-content(20%);
     row-gap: 20px;
     column-gap: 20px;
 }

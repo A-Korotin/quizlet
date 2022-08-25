@@ -3,6 +3,7 @@ package com.korotin.quizlet.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,9 +20,9 @@ public class Card {
     @GeneratedValue
     private UUID id;
 
-    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String term;
 
-    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String definition;
 }
