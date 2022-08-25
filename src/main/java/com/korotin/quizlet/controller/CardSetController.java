@@ -1,7 +1,11 @@
 package com.korotin.quizlet.controller;
 
+import com.korotin.quizlet.annotation.HandleBusinessExceptions;
+import com.korotin.quizlet.annotation.HandleUrlExceptions;
 import com.korotin.quizlet.domain.CardSet;
 import com.korotin.quizlet.domain.security.User;
+import com.korotin.quizlet.exception.EndpointException;
+import com.korotin.quizlet.exception.RightsException;
 import com.korotin.quizlet.repository.CardSetRepository;
 import com.korotin.quizlet.service.CardSetService;
 import com.korotin.quizlet.service.UserService;
@@ -19,9 +23,12 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+// TODO: 25.08.2022 repeated rights and endpoint checks 
 @Controller
 @RequestMapping("/sets")
 @AllArgsConstructor
+@HandleBusinessExceptions
+@HandleUrlExceptions
 public class CardSetController {
 
     private final CardSetRepository cardSetRepository;
@@ -80,12 +87,17 @@ public class CardSetController {
         Optional<CardSet> cardSetOptional = cardSetRepository.findById(id);
 
         if (cardSetOptional.isEmpty()) {
-            // todo not found page
-            return "redirect:/home";
+            throw new EndpointException("Set with id '%s' does not exists".formatted(id.toString()));
         }
-
+        
+        CardSet set = cardSetOptional.get();
+        
         boolean allowedToModify = cardSetService.userHaveRightsToModify(id, getCurrentUser());
 
+        if (!set.getIsPublic() && !allowedToModify) {
+            throw new RightsException("You do not have rights to view this set");
+        }
+        
         model.addAttribute("userIsEditor", allowedToModify);
         model.addAttribute("set", cardSetOptional.get());
         return "viewSet";
@@ -96,14 +108,12 @@ public class CardSetController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-//        if (!cardSetService.userHaveRightsToModify(id, authentication.getName())) {
-//            // todo no rights to access page
-//            return "redirect:/home";
-//        }
+        if (!cardSetService.userHaveRightsToModify(id, getCurrentUser())) {
+            throw new RightsException("You do not have rights to modify this set");
+        }
 
         if (!cardSetRepository.existsById(id)) {
-            // todo not found page
-            return "redirect:/home";
+            throw new EndpointException("Set with id '%s' does not exists".formatted(id.toString()));
         }
 
         cardSetRepository.deleteById(id);
@@ -121,8 +131,11 @@ public class CardSetController {
         Optional<CardSet> cardSet = cardSetRepository.findById(id);
 
         if (cardSet.isEmpty()) {
-            // todo not found page
-            return "redirect:/home";
+            throw new EndpointException("Set with id '%s' does not exists".formatted(id.toString()));
+        }
+
+        if (!cardSetService.userHaveRightsToModify(id, getCurrentUser())) {
+            throw new RightsException("You do not have rights to modify this set");
         }
 
         model.addAttribute("set", cardSet.get());
@@ -138,8 +151,11 @@ public class CardSetController {
         Optional<CardSet> cardSet = cardSetRepository.findById(id);
 
         if (cardSet.isEmpty()) {
-            // todo not found page
-            return "redirect:/home";
+            throw new EndpointException("Set with id '%s' does not exists".formatted(id.toString()));
+        }
+
+        if (!cardSetService.userHaveRightsToModify(id, getCurrentUser())) {
+            throw new RightsException("You do not have rights to modify this set");
         }
 
         CardSet set = cardSet.get();
@@ -151,6 +167,11 @@ public class CardSetController {
     @PutMapping("/{id}/editors")
     public String confirmEditors(@PathVariable UUID id,
                                  @ModelAttribute CardSet editedSet) {
+
+        if (!cardSetService.userHaveRightsToModify(id, getCurrentUser())) {
+            throw new RightsException("You do not have rights to modify this set");
+        }
+        
         List<User> editors = editedSet.getEditors()
                 .stream().filter(user -> user.getUsername() != null && !user.getUsername().equals(""))
                 .filter(user -> {
@@ -170,8 +191,7 @@ public class CardSetController {
         Optional<CardSet> cardSetOptional = cardSetRepository.findById(id);
 
         if (cardSetOptional.isEmpty()) {
-            // TODO: 23.08.2022 not found page
-            return "redirect:/home";
+            throw new EndpointException("Set with id '%s' does not exists".formatted(id.toString()));
         }
 
         CardSet set = cardSetOptional.get();
@@ -186,7 +206,10 @@ public class CardSetController {
     public String confirmEdit(@PathVariable UUID id,
                               @ModelAttribute CardSet editedCardSet) {
 
-        // todo check owner/editor of chosen set
+        if (!cardSetService.userHaveRightsToModify(id, getCurrentUser())) {
+            throw new RightsException("You do not have rights to modify this set");
+        }
+        
         System.out.println(editedCardSet);
         editedCardSet.clearEmptyCards();
         editedCardSet.setOwner(getCurrentUser());

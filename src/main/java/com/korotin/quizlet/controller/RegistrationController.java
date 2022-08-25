@@ -1,5 +1,6 @@
 package com.korotin.quizlet.controller;
 
+import com.korotin.quizlet.annotation.HandleUrlExceptions;
 import com.korotin.quizlet.domain.security.User;
 import com.korotin.quizlet.service.UserService;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
+@HandleUrlExceptions
 public class RegistrationController {
 
     private UserService userService;

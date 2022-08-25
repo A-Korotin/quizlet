@@ -1,6 +1,8 @@
 package com.korotin.quizlet.controller;
 
+import com.korotin.quizlet.annotation.HandleUrlExceptions;
 import com.korotin.quizlet.domain.CardSet;
+import com.korotin.quizlet.exception.EndpointException;
 import com.korotin.quizlet.repository.CardSetRepository;
 import com.korotin.quizlet.service.CardSetService;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
+@HandleUrlExceptions
 public class MainController {
 
     private final CardSetRepository cardSetRepository;
@@ -25,13 +28,14 @@ public class MainController {
     @GetMapping("/home")
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.isAuthenticated());
-        if (!auth.isAuthenticated()) {
+        String username = auth.getName();
+        System.out.println(username);
+        if (username.equals("anonymousUser")) {
             return "home";
         }
 
-        List<CardSet> ownedCardSets = cardSetService.getOwnedSetsByUsername(auth.getName());
-        List<CardSet> editedCardSets = cardSetService.getSetsWhereUserIsEditorByUsername(auth.getName());
+        List<CardSet> ownedCardSets = cardSetService.getOwnedSetsByUsername(username);
+        List<CardSet> editedCardSets = cardSetService.getSetsWhereUserIsEditorByUsername(username);
 
         System.out.println("owned " + ownedCardSets.size());
         System.out.println("edited " + editedCardSets.size());

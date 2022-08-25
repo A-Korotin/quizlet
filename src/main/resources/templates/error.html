@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Error!</title>
+        <link href="/static/styles/general.css" th:href="@{/styles/general.css}" rel="stylesheet"/>
+        <link href="/static/styles/error.css" th:href="@{/styles/error.css}" rel="stylesheet"/>
+    </head>
+    <body>
+        <main class="page-content">
+            <div class="error-pane">
+                <div class="heading">
+                    Error!
+                </div>
+                <div th:if="${cause}" class="sub-heading" th:text="${cause}">
+                    Page does not exists, or you do not have rights to access it.
+                </div>
+                <div th:unless="${cause}" class="sub-heading">
+                    Page could not be found. Check your URL.
+                </div>
+                <div th:if="${info != null}" class="error-info" th:text="${'Additional info: ' + info}">
+                    ERROR INFO: ${info}
+                </div>
+            </div>
+
+            <div class="home-link-container">
+                <a class="home-link" href="/home">Return to home page</a>
+            </div>
+        </main>
+    </body>
+</html>

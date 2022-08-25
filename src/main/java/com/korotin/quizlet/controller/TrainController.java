@@ -1,5 +1,6 @@
 package com.korotin.quizlet.controller;
 
+import com.korotin.quizlet.annotation.HandleUrlExceptions;
 import com.korotin.quizlet.domain.CardSet;
 import com.korotin.quizlet.repository.CardSetRepository;
 import com.korotin.quizlet.service.CardSetService;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Controller
 @AllArgsConstructor
+@HandleUrlExceptions
 public class TrainController {
 
     private CardSetRepository cardSetRepository;
