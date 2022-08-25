@@ -3,8 +3,8 @@ create table card if not exists
 	id uuid not null
 		constraint card_pkey
 			primary key,
-	definition varchar(255),
-	term varchar(255),
+	definition text,
+	term text,
 	set_id uuid
 		constraint fkn2f6am7956yqlr0hukry1nb6o
 			references card_set
@@ -17,9 +17,9 @@ create table card_set if not exists
 	id uuid not null
 		constraint card_set_pkey
 			primary key,
-	description varchar(255),
+	description text,
 	is_public boolean,
-	title varchar(255),
+	title text,
 	owner_id uuid
 		constraint fkkfslu38cp7l261swal8t20mup
 			references usr
@@ -55,7 +55,7 @@ create table usr if not exists
 	id uuid not null
 		constraint usr_pkey
 			primary key,
-	password varchar(255),
+	password varchar(30),
 	username varchar(30)
 );
 
