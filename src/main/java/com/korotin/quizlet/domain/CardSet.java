@@ -19,8 +19,10 @@ public class CardSet {
     @GeneratedValue
     private UUID id;
 
+    @Lob
     private String title;
 
+    @Lob
     private String description = "";
 
     private Boolean isPublic;
